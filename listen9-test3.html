@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@600&display=swap" rel="stylesheet">
+    <title>V9 - TEST 3 - IELTS Listening Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            background-color: #ffffff;
+            line-height: 1.5;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(120deg, #e9eefb, #dfe7ff, #e9eefb);
+            background-size: 200% 200%;
+            animation: bannerFlow 8s ease-in-out infinite;
+            padding: 10px 20px;
+            border-bottom: 1px solid #d7def5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 60px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+            flex: 1 1 auto;
+            justify-content: flex-start;
+        }
+
+        .audio-bar {
+            position: sticky;
+            top: 60px;
+            z-index: 95;
+            background: #f7f9fc;
+            border-bottom: 1px solid #e0e7ff;
+            padding: 12px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1 1 420px;
+            min-width: 260px;
+        }
+
+        #audio-play-pause {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid #d5ddf7;
+            background: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        #audio-play-pause:hover {
+            box-shadow: 0 10px 24px rgba(33, 58, 128, 0.12);
+            transform: translateY(-1px);
+        }
+
+        #audio-progress {
+            flex: 1;
+            accent-color: #4a90e2;
+            cursor: pointer;
+        }
+
+        .audio-time {
+            font-family: monospace;
+            font-size: 13px;
+            color: #3a3f63;
+            min-width: 84px;
+            text-align: right;
+        }
+
+        .audio-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            flex: 0 0 auto;
+        }
+
+        .audio-speed {
+            position: relative;
+        }
+
+        #audio-speed-btn {
+            border: 1px solid #d5ddf7;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1c2566;
+        }
+
+        #audio-speed-options {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #dfe7ff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(33, 58, 128, 0.15);
+            overflow: hidden;
+            min-width: 110px;
+        }
+
+        .audio-speed-option {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .audio-speed-option:hover {
+            background: #f1f5ff;
+        }
+
+        .script-toggle-btn {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .script-toggle-btn:hover {
+            background: #357abd;
+        }
+
+        .header-ad {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 14px;
+            border: 1px solid rgba(215, 222, 245, 0.9);
+            background: rgba(255, 255, 255, 0.24);
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 10px 24px rgba(33, 58, 128, 0.12);
+            min-width: 180px;
+            max-width: calc(100% - 70px);
+            height: 48px;
+            overflow: hidden;
+        }
+        .ad-copy {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            overflow: hidden;
+        }
+        .ad-eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #6b7ac7;
+            font-weight: 700;
+        }
+        .ad-marquee {
+            display: flex;
+            gap: 24px;
+            width: 100%;
+            align-items: center;
+        }
+        .ad-headline {
+            font-size: 15px;
+            font-weight: 800;
+            color: #1c2566;
+            white-space: nowrap;
+        }
+        .ad-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #cdd6f5;
+            background: rgba(255, 255, 255, 0.7);
+            color: #46507a;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 800;
+            margin-left: 6px;
+        }
+        @keyframes bannerFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-container {
+            margin-top: 90px;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            min-height: calc(100vh - 170px);
+            padding-bottom: 80px;
+        }
+
+        .student-form-container {
+            background-color: #f7f9fc;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e7ff;
+            margin: 0 20px 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .student-form-container h3 {
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #1f2b59;
+        }
+        
+        .student-inputs {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .student-input-field {
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .panels-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            position: relative;
+        }
+
+        .questions-panel {
+            padding: 10px 20px 40px;
+            overflow-y: auto;
+            flex: 1;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        .script-panel {
+            width: 420px;
+            min-width: 350px;
+            border-left: 1px solid #e0e0e0;
+            background: #fbfbfc;
+            padding: 20px;
+            overflow-y: auto;
+            height: calc(100vh - 170px);
+            position: sticky;
+            top: 110px;
+            display: none;
+        }
+        .script-panel.active {
+            display: block;
+        }
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 8px;
+        }
+        .script-content {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            word-wrap: break-word;
+        }
+        .script-content p {
+            margin-bottom: 12px;
+        }
+        .highlight-evidence {
+            background-color: #bbf7d0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .nav-row {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            height: 80px;
+            z-index: 100;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer__questionWrapper___1tZ46 {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .footer__questionNo___3WNct {
+            background: none;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .footer__questionNo___3WNct:hover {
+            background-color: #f8f9fa;
+        }
+
+        .section-prefix {
+            font-size: 16px;
+        }
+
+        .sectionNr {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .attemptedCount {
+            font-size: 14px;
+            color: #666;
+            margin-left: 5px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .attemptedCount {
+                display: none;
+            }
+        }
+
+        .footer__questionWrapper___1tZ46.selected .attemptedCount {
+            display: none;
+        }
+
+        .footer__subquestionWrapper___9GgoP {
+            display: none;
+            gap: 2px;
+            margin-left: 10px;
+        }
+
+        .footer__questionWrapper___1tZ46.selected .footer__subquestionWrapper___9GgoP {
+            display: flex;
+        }
+
+        .subQuestion {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #ccc;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            border-radius: 2px;
+        }
+
+        .subQuestion.correct {
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        .subQuestion.incorrect {
+            background-color: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+        .subQuestion.answered {
+            background-color: #0284c7;
+            border-color: #0284c7;
+            color: white;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .footer__deliverButton___3FM07 {
+            margin-left: auto;
+            margin-right: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s, border-color 0.2s;
+            min-width: 170px;
+            justify-content: center;
+        }
+
+        .footer__deliverButton___3FM07:hover {
+            background-color: #e0e0e0;
+            border-color: #bbb;
+        }
+
+        .fa-check::before {
+            content: "✓";
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .context-menu {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            min-width: 140px;
+        }
+
+        .context-menu-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .context-menu-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .context-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .annotation-highlight {
+            background-color: #fff3a3;
+            border-radius: 4px;
+            padding: 0 2px;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .question {
+            margin-bottom: 40px;
+        }
+        .question p {
+            margin-bottom: 10px;
+        }
+        .question-title {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            margin: 6px 0 10px;
+            color: #000;
+        }
+        .answer-input {
+            border: 1px solid #888;
+            border-radius: 4px;
+            background-color: #fff;
+            padding: 2px 5px;
+            font-size: 16px;
+            text-align: center;
+            margin-right: 4px;
+            margin-left: 4px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            height: 28px;
+            width: 150px;
+            z-index: 10;
+            position: relative;
+        }
+        .answer-input.correct {
+            border-color: #28a745;
+            background-color: #e9f7ef;
+        }
+        .answer-input.incorrect {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .questions-container {
+            width: 100%;
+        }
+        audio {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .part-header {
+            background-color: #f1f2ec;
+            padding: 10px 16px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+            margin: 8px 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .mcq-question-text {
+            margin: 0 0 10px 0;
+            color: #111827;
+            font-weight: 400;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .mcq-question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 26px;
+            height: 26px;
+            padding: 2px 8px;
+            border: 2px solid #ccc;
+            border-radius: 3px;
+            background: #fff;
+            font-weight: 700;
+            color: #1f2b4d;
+            font-size: 13px;
+            line-height: 1;
+        }
+        .multi-choice-question {
+            margin-bottom: 22px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 3px solid transparent;
+        }
+        .multi-choice-option {
+            margin: 10px 0;
+            font-size: 15px;
+            color: #111827;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .multi-choice-option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .multi-choice-option input[type="checkbox"],
+        .multi-choice-option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: #4a90e2;
+        }
+        .timer-container {
+            display: flex;
+            position: relative;
+            cursor: default;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            align-items: center;
+            gap: 12px;
+            flex: 0 0 auto;
+            min-width: 220px;
+            padding: 4px 10px;
+            border-radius: 14px;
+            border: 1px solid #d7def5;
+            background: rgba(255, 255, 255, 0.24);
+            box-shadow: 0 8px 18px rgba(33, 58, 128, 0.08);
+        }
+        .timer-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 15px;
+        }
+        .timer-controls button {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            padding: 0;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        .timer-controls button:hover {
+            background: #e0e0e0;
+        }
+        .timer-controls button svg {
+            width: 20px;
+            height: 20px;
+            fill: #333;
+        }
+        .matching-form-container {
+            margin-top: 20px;
+        }
+        .matching-form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+        .matching-form-label {
+            width: auto;
+            flex: 1 1 320px;
+            margin-right: 8px;
+        }
+        .matching-form-row select.answer-input {
+            width: 220px;
+            flex-shrink: 0;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.hidden {
+            display: none;
+        }
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #888;
+        }
+        .modal-content h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .results-summary {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .results-details-container {
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .result-row {
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr;
+            gap: 15px;
+            padding: 8px 5px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+        .result-row.incorrect {
+            background-color: #f8d7da;
+        }
+        .result-row .q-num {
+            font-weight: bold;
+        }
+        .result-row .user-ans {
+            color: #555;
+        }
+        .result-row .correct-ans {
+            color: #155724;
+            font-weight: 500;
+        }
+        .explanation-inline {
+            background-color: #e9f7ef;
+            border: 1px solid #28a745;
+            padding: 6px 10px;
+            margin-top: 6px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #155724;
+            display: none;
+            cursor: pointer;
+        }
+        .explanation-inline:hover {
+            background-color: #d4edda;
+        }
+        .correct-tag {
+            background-color: #28a745;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-left: 8px;
+            display: inline-block;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        #launchScreen, #app {
+            width: 100vw;
+            height: 100vh;
+        }
+        #app {
+            display: none;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        #launchScreen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(206, 219, 255, 0.48), transparent 34%),
+                radial-gradient(circle at 100% 100%, rgba(221, 229, 255, 0.44), transparent 38%),
+                #f4f6fc;
+            color: #1f2b59;
+        }
+        .launch-card {
+            width: min(980px, 100%);
+            border: 1px solid #d7def5;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #ffffff, #f7f9ff);
+            box-shadow: 0 16px 38px rgba(33, 58, 128, 0.14);
+            padding: 28px 30px 22px;
+            display: grid;
+            gap: 12px;
+        }
+        .launch-eyebrow {
+            margin: 0;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #6f7cb2;
+            font-weight: 700;
+        }
+        .launch-title {
+            margin: 4px 0 0;
+            font-size: clamp(26px, 3.5vw, 40px);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: #1c2566;
+        }
+        .launch-meta {
+            margin: 8px 0 0;
+            color: #3c4a81;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .launch-guide {
+            border: 1px solid #d7def5;
+            border-radius: 12px;
+            background: #f2f5ff;
+            padding: 14px;
+            display: grid;
+            gap: 6px;
+        }
+        .launch-main {
+            margin: 0;
+            font-size: clamp(18px, 2.2vw, 23px);
+            line-height: 1.32;
+            font-weight: 700;
+            color: #1d2a60;
+        }
+        .launch-sub {
+            margin: 0;
+            color: #4c598f;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .launch-notes {
+            margin: 0;
+            padding-left: 18px;
+            display: grid;
+            gap: 6px;
+            color: #3f4e83;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+        .launch-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .launch-btn {
+            border: 1px solid #c5d0f2;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 11px 16px;
+            color: #24336e;
+            background: #ffffff;
+            transition: transform 0.12s ease;
+            box-shadow: 0 8px 20px rgba(35, 54, 110, 0.14);
+        }
+        .launch-btn:hover {
+            transform: translateY(-1px);
+            background: #f6f8ff;
+        }
+        .launch-foot {
+            border-top: 1px dashed #d2daf3;
+            padding-top: 10px;
+            font-size: 13px;
+            color: #5f6da6;
+        }
+    </style>
+</head>
+<body>
+    <section id="launchScreen" aria-label="Launch screen">
+        <div class="launch-card">
+            <div>
+                <p class="launch-eyebrow">IELTS Test Launcher</p>
+                <h1 class="launch-title" id="launchTestTitle">V9 - TEST 3 - IELTS Listening Practice</h1>
+                <p class="launch-meta">Dạng bài: Listening</p>
+            </div>
+            <div class="launch-guide">
+                <p class="launch-main">Nhấn F11 để bắt đầu làm bài ở chế độ toàn màn hình.</p>
+                <p class="launch-sub">Nhấn F11 lần nữa để thoát toàn màn hình nếu cần.</p>
+                <p class="launch-sub">Nếu bàn phím của bạn không có F11 hoặc bạn không muốn dùng toàn màn hình, hãy bấm nút bên dưới để làm bài ở giao diện thường.</p>
+            </div>
+            <ul class="launch-notes">
+                <li>Kiểm tra kết nối âm thanh trước khi bắt đầu (ưu tiên tai nghe, có thể dùng loa nếu cần).</li>
+                <li>Không tải lại trang trong khi làm bài để tránh mất tiến trình.</li>
+                <li>Giữ môi trường yên tĩnh để nghe rõ từng phần.</li>
+            </ul>
+            <div class="launch-row">
+                <button id="startNormalBtn" class="launch-btn" type="button">Tôi không có nút F11 trên bàn phím</button>
+            </div>
+            <div class="launch-foot">Khuyến nghị dùng F11 để có trải nghiệm giống ứng dụng nhất.</div>
+        </div>
+    </section>
+    <div id="app">
+    <div class="header">
+        <div class="timer-container">
+            <span class="timer-display">40 minutes remaining</span>
+            <div class="timer-controls">
+                <button id="timer-toggle-btn" title="Pause/Resume Timer">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>
+                </button>
+                <button id="timer-reset-btn" title="Reset Timer">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="https://www.facebook.com/englishresourcehub" target="_blank" rel="noopener" class="header-ad">
+                <div class="ad-copy">
+                    <p class="ad-eyebrow">Study boost</p>
+                    <div class="ad-marquee">
+                        <div class="ad-loop">
+                            <span class="ad-headline">Master every IELTS tip and strategy in just 3 to 7 intensive sessions and full EXAM MATERIALS!</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <button class="ad-close" type="button" aria-label="Close ad" title="Close" onclick="window.open('https://www.facebook.com/englishresourcehub','_blank','noopener')">×</button>
+        </div>
+    </div>
+
+    <div class="audio-bar">
+        <div class="audio-controls">
+            <button id="audio-play-pause" type="button" aria-label="Play or pause audio">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>
+            </button>
+            <input type="range" id="audio-progress" min="0" value="0" step="0.01">
+            <span class="audio-time"><span id="audio-current">0:00</span> / <span id="audio-duration">0:00</span></span>
+        </div>
+        <div class="audio-meta">
+            <button class="script-toggle-btn hidden" id="scriptToggleBtn" type="button" onclick="toggleScriptPanel()">Audio Script</button>
+            <div class="audio-speed">
+                <button id="audio-speed-btn" type="button" aria-haspopup="true" aria-expanded="false">1.0x</button>
+                <div id="audio-speed-options" class="hidden" role="menu">
+                    <div class="audio-speed-option" data-speed="0.75" role="menuitem">0.75x</div>
+                    <div class="audio-speed-option" data-speed="1" role="menuitem">1.0x</div>
+                    <div class="audio-speed-option" data-speed="1.25" role="menuitem">1.25x</div>
+                    <div class="audio-speed-option" data-speed="1.5" role="menuitem">1.5x</div>
+                </div>
+            </div>
+        </div>
+        <!-- Update file audio here -->
+        <audio id="audio-player" src="V9-audio3.mp3" preload="metadata"></audio>
+    </div>
+
+        <div class="main-container" id="main-container">
+            <div class="student-form-container">
+                <h3>Thông tin học sinh (Bắt buộc khi nộp bài)</h3>
+                <div class="student-inputs">
+                    <input type="text" id="studentName" class="student-input-field" placeholder="Họ và tên học sinh" required>
+                    <input type="text" id="studentClass" class="student-input-field" placeholder="Lớp" required>
+                </div>
+            </div>
+
+            <div id="passage-header-container" style="width:100%;">
+                <div id="part-header-1" class="part-header">
+                    <p><strong>Part 1</strong></p>
+                    <p>Listen to the recording and answer questions 1-10.</p>
+                </div>
+                <div id="part-header-2" class="part-header hidden">
+                    <p><strong>Part 2</strong></p>
+                    <p>Listen to the recording and answer questions 11-20.</p>
+                </div>
+                <div id="part-header-3" class="part-header hidden">
+                    <p><strong>Part 3</strong></p>
+                    <p>Listen to the recording and answer questions 21-30.</p>
+                </div>
+                <div id="part-header-4" class="part-header hidden">
+                    <p><strong>Part 4</strong></p>
+                    <p>Listen to the recording and answer questions 31-40.</p>
+                </div>
+            </div>
+            
+            <div class="panels-container">
+                <div class="questions-panel" id="questions-panel">
+                    
+                    <!-- SECTION 1 -->
+                    <div id="questions-1" class="question-set">
+                        <div class="questions-container">
+                            <div class="question" data-q-start="1" data-q-end="8">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 1–8</strong></p>
+                                    <p>Choose the correct answer, <strong>A, B or C</strong>.</p>
+                                </div>
+                                <p><em>Example: The man wants to visit the centre with<br>
+                                A. friends<br>
+                                B. relative<br>
+                                <strong>C. colleagues</strong></em></p>
+
+                                <div class="multi-choice-question" data-q-start="1" data-q-end="1" id="q1-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="1">1</span><span class="mcq-question-title">The centre has enough accommodation for</span><span id="ans-tag-1"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q1" value="A" onchange="trackAnswer(1)"> A. 18 people.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q1" value="B" onchange="trackAnswer(1)"> B. 20 people.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q1" value="C" onchange="trackAnswer(1)"> C. 38 people.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-1" onclick="highlightEvidence('38')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="2" data-q-end="2" id="q2-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="2">2</span><span class="mcq-question-title">The meeting room is currently</span><span id="ans-tag-2"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q2" value="A" onchange="trackAnswer(2)"> A. unavailable.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q2" value="B" onchange="trackAnswer(2)"> B. flooded.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q2" value="C" onchange="trackAnswer(2)"> C. booked.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-2" onclick="highlightEvidence('unavailable')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="3" data-q-end="3" id="q3-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="3">3</span><span class="mcq-question-title">Visitors must tell the centre in advance if they want to</span><span id="ans-tag-3"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q3" value="A" onchange="trackAnswer(3)"> A. use the centre's kitchen.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q3" value="B" onchange="trackAnswer(3)"> B. have meals cooked for them.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q3" value="C" onchange="trackAnswer(3)"> C. eat at restaurants outside.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-3" onclick="highlightEvidence('cater')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="4" data-q-end="4" id="q4-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="4">4</span><span class="mcq-question-title">All visitors on the of the farm can</span><span id="ans-tag-4"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q4" value="A" onchange="trackAnswer(4)"> A. get information about organic farming.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q4" value="B" onchange="trackAnswer(4)"> B. help to feed the animals.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q4" value="C" onchange="trackAnswer(4)"> C. watch a tractor demonstration.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-4" onclick="highlightEvidence('organic farming')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="5" data-q-end="5" id="q5-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="5">5</span><span class="mcq-question-title">On the survival course, people have to</span><span id="ans-tag-5"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q5" value="A" onchange="trackAnswer(5)"> A. learn to use map.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q5" value="B" onchange="trackAnswer(5)"> B. find their own food.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q5" value="C" onchange="trackAnswer(5)"> C. run through woodland.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-5" onclick="highlightEvidence('collecting food')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="6" data-q-end="6" id="q6-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="6">6</span><span class="mcq-question-title">From the centre, it is easy to walk to</span><span id="ans-tag-6"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q6" value="A" onchange="trackAnswer(6)"> A. Exmoor National Park.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q6" value="B" onchange="trackAnswer(6)"> B. the beach.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q6" value="C" onchange="trackAnswer(6)"> C. a cycling rout.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-6" onclick="highlightEvidence('cycle path')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="7" data-q-end="7" id="q7-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="7">7</span><span class="mcq-question-title">If the weather is bad visitors can go to a</span><span id="ans-tag-7"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q7" value="A" onchange="trackAnswer(7)"> A. cinema.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q7" value="B" onchange="trackAnswer(7)"> B. theatre.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q7" value="C" onchange="trackAnswer(7)"> C. museum.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-7" onclick="highlightEvidence('museum')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="8" data-q-end="8" id="q8-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="8">8</span><span class="mcq-question-title">Groups who wish to stay at the centre must pay</span><span id="ans-tag-8"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q8" value="A" onchange="trackAnswer(8)"> A. part of the cost in advance.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q8" value="B" onchange="trackAnswer(8)"> B. all of the cost in advance.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q8" value="C" onchange="trackAnswer(8)"> C. all of the cost on arrival.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-8" onclick="highlightEvidence('deposit')"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="question" data-q-start="9" data-q-end="10">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 9–10</strong></p>
+                                    <p>Complete the notes below.</p>
+                                    <p>Write <strong>ONE WORD AND/ OR NUMBERS</strong> for each answer.</p>
+                                </div>
+                                <p>Address: Winsham Farm Rd 9 <input type="text" class="answer-input" id="q9" placeholder="9" oninput="trackAnswer(9)"><span id="ans-tag-9"></span> near Sherbone 10 <input type="text" class="answer-input" id="q10" placeholder="10" oninput="trackAnswer(10)"><span id="ans-tag-10"></span></p>
+                                <div class="explanation-inline" id="exp-9" onclick="highlightEvidence('Cotehele')"></div>
+                                <div class="explanation-inline" id="exp-10" onclick="highlightEvidence('SH121LQ')"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2 -->
+                    <div id="questions-2" class="question-set hidden">
+                        <div class="questions-container">
+                            <div class="question" data-q-start="11" data-q-end="16">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 11–16</strong></p>
+                                    <p>Complete the table below.</p>
+                                    <p>Write <strong>NO MORE THAN THREE WORDS AND/ OR A NUMBER</strong> for each answer.</p>
+                                </div>
+                                <table style="width:100%; border-collapse: collapse; margin-bottom: 20px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Vacation Job</th>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Main Advantage</th>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Main Disadvantage</th>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Recommendation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Stocktaking</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">11 <input type="text" class="answer-input" id="q11" placeholder="11" oninput="trackAnswer(11)" style="width: 100px;"><span id="ans-tag-11"></span></td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">tiring</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">12 <input type="text" class="answer-input" id="q12" placeholder="12" oninput="trackAnswer(12)" style="width: 120px;"><span id="ans-tag-12"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Office work</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">air-conditioning</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">13 <input type="text" class="answer-input" id="q13" placeholder="13" oninput="trackAnswer(13)" style="width: 140px;"><span id="ans-tag-13"></span></td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">choose a 14 <input type="text" class="answer-input" id="q14" placeholder="14" oninput="trackAnswer(14)" style="width: 100px;"><span id="ans-tag-14"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">theme park attendant</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">15 <input type="text" class="answer-input" id="q15" placeholder="15" oninput="trackAnswer(15)" style="width: 100px;"><span id="ans-tag-15"></span></td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">rude customers</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">16 <input type="text" class="answer-input" id="q16" placeholder="16" oninput="trackAnswer(16)" style="width: 100px;"><span id="ans-tag-16"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="explanation-inline" id="exp-11" onclick="highlightEvidence('travelling')"></div>
+                                <div class="explanation-inline" id="exp-12" onclick="highlightEvidence('good shoes')"></div>
+                                <div class="explanation-inline" id="exp-13" onclick="highlightEvidence('formal clothes')"></div>
+                                <div class="explanation-inline" id="exp-14" onclick="highlightEvidence('large office')"></div>
+                                <div class="explanation-inline" id="exp-15" onclick="highlightEvidence('good pay')"></div>
+                                <div class="explanation-inline" id="exp-16" onclick="highlightEvidence('live nearby')"></div>
+                            </div>
+                            
+                            <div class="question" data-q-start="17" data-q-end="20">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 17–20</strong></p>
+                                    <p>Choose the correct answer, <strong>A, B or C</strong>.</p>
+                                </div>
+                                <div class="multi-choice-question" data-q-start="17" data-q-end="17" id="q17-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="17">17</span><span class="mcq-question-title">Peter learned about the job</span><span id="ans-tag-17"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q17" value="A" onchange="trackAnswer(17)"> A. from a college friend.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q17" value="B" onchange="trackAnswer(17)"> B. on the computer.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q17" value="C" onchange="trackAnswer(17)"> C. from a student job centre.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-17" onclick="highlightEvidence('zoo website')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="18" data-q-end="18" id="q18-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="18">18</span><span class="mcq-question-title">Peter mainly enjoyed the job because it was</span><span id="ans-tag-18"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q18" value="A" onchange="trackAnswer(18)"> A. easy.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q18" value="B" onchange="trackAnswer(18)"> B. challenging.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q18" value="C" onchange="trackAnswer(18)"> C. unusual.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-18" onclick="highlightEvidence('original work')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="19" data-q-end="19" id="q19-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="19">19</span><span class="mcq-question-title">The job's most interesting aspect was</span><span id="ans-tag-19"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q19" value="A" onchange="trackAnswer(19)"> A. learning about the environment.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q19" value="B" onchange="trackAnswer(19)"> B. working with children.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q19" value="C" onchange="trackAnswer(19)"> C. caring for the animals.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-19" onclick="highlightEvidence('young kids')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="20" data-q-end="20" id="q20-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="20">20</span><span class="mcq-question-title">Peter has decided that next vacation he</span><span id="ans-tag-20"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q20" value="A" onchange="trackAnswer(20)"> A. won't take a job.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q20" value="B" onchange="trackAnswer(20)"> B. will work at the zoo.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q20" value="C" onchange="trackAnswer(20)"> C. will work elsewhere.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-20" onclick="highlightEvidence('won\\'t be able')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3 -->
+                    <div id="questions-3" class="question-set hidden">
+                        <div class="questions-container">
+                            
+                            <div class="question" data-q-start="21" data-q-end="26">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 21–26</strong></p>
+                                    <p>Choose the correct letter, <strong>A, B or C</strong>.</p>
+                                    <div class="question-title">Voice training for drama students</div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="21" data-q-end="21" id="q21-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="21">21</span><span class="mcq-question-title">Ed is giving the voice coaching workshop in order to get</span><span id="ans-tag-21"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q21" value="A" onchange="trackAnswer(21)"> A. a new job.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q21" value="B" onchange="trackAnswer(21)"> B. a qualification.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q21" value="C" onchange="trackAnswer(21)"> C. a promotion.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-21" onclick="highlightEvidence('diploma')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="22" data-q-end="22" id="q22-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="22">22</span><span class="mcq-question-title">According to Fiona, the seating pattern that Ed chooses</span><span id="ans-tag-22"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q22" value="A" onchange="trackAnswer(22)"> A. should be illustrated visually.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q22" value="B" onchange="trackAnswer(22)"> B. has to be explained in detail.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q22" value="C" onchange="trackAnswer(22)"> C. is not particularly important.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-22" onclick="highlightEvidence('doesn\\'t matter')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="23" data-q-end="23" id="q23-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="23">23</span><span class="mcq-question-title">Fiona and Ed agree that in the first activity, the students</span><span id="ans-tag-23"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q23" value="A" onchange="trackAnswer(23)"> A. may feel uncomfortable.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q23" value="B" onchange="trackAnswer(23)"> B. like to make group contact.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q23" value="C" onchange="trackAnswer(23)"> C. must focus on themselves.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-23" onclick="highlightEvidence('own thoughts')"></div>
+                                </div>
+                                
+                                <div class="multi-choice-question" data-q-start="24" data-q-end="24" id="q24-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="24">24</span><span class="mcq-question-title">Fiona and Ed agree that in the second activity, Ed should</span><span id="ans-tag-24"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q24" value="A" onchange="trackAnswer(24)"> A. insist which students work together.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q24" value="B" onchange="trackAnswer(24)"> B. tell students to prepare a speech.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q24" value="C" onchange="trackAnswer(24)"> C. include a focus on breath control.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-24" onclick="highlightEvidence('breathing')"></div>
+                                </div>
+                                
+                                <div class="multi-choice-question" data-q-start="25" data-q-end="25" id="q25-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="25">25</span><span class="mcq-question-title">What does Fiona suggest about working in a big space?</span><span id="ans-tag-25"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q25" value="A" onchange="trackAnswer(25)"> A. It could be outside or inside.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q25" value="B" onchange="trackAnswer(25)"> B. It is best to go to somewhere like a park.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q25" value="C" onchange="trackAnswer(25)"> C. It is useful for getting actors to shout.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-25" onclick="highlightEvidence('outdoors')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="26" data-q-end="26" id="q26-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="26">26</span><span class="mcq-question-title">What does Fiona think of Ed's selection of texts?</span><span id="ans-tag-26"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q26" value="A" onchange="trackAnswer(26)"> A. It should include more classical texts.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q26" value="B" onchange="trackAnswer(26)"> B. It needs to focus on a single emotion.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q26" value="C" onchange="trackAnswer(26)"> C. It has to cover a wider range.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-26" onclick="highlightEvidence('contemporary sources')"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="question" data-q-start="27" data-q-end="30">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 27–30</strong></p>
+                                    <p>What disadvantage do the speakers identify for each of the following textbooks?</p>
+                                    <p>Choose <strong>FOUR</strong> correct answers, <strong>A-G</strong>, next to questions 27-30.</p>
+                                </div>
+                                <div class="example-box" style="font-size: 15px; margin-bottom: 20px;">
+                                    <p><strong>Disadvantages</strong></p>
+                                    <ul class="options-list" style="list-style-type: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                        <li><strong>A</strong> too expensive</li>
+                                        <li><strong>B</strong> too limited</li>
+                                        <li><strong>C</strong> prejudiced</li>
+                                        <li><strong>D</strong> unrealistic</li>
+                                        <li><strong>E</strong> out of date</li>
+                                        <li><strong>F</strong> too detailed</li>
+                                        <li><strong>G</strong> unavailable</li>
+                                    </ul>
+                                </div>
+                                <div class="matching-form-container">
+                                    <div class="matching-form-row">
+                                        <label for="q27" class="matching-form-label"><strong>27. Vocal Instruction</strong></label>
+                                        <select class="answer-input" id="q27" onchange="trackAnswer(27)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><span id="ans-tag-27"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-27" onclick="highlightEvidence('written 30 years ago')"></div>
+
+                                    <div class="matching-form-row">
+                                        <label for="q28" class="matching-form-label"><strong>28. Improve Your Accent</strong></label>
+                                        <select class="answer-input" id="q28" onchange="trackAnswer(28)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><span id="ans-tag-28"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-28" onclick="highlightEvidence('narrow')"></div>
+
+                                    <div class="matching-form-row">
+                                        <label for="q29" class="matching-form-label"><strong>29. Actors' Handbook</strong></label>
+                                        <select class="answer-input" id="q29" onchange="trackAnswer(29)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><span id="ans-tag-29"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-29" onclick="highlightEvidence('out of print')"></div>
+
+                                    <div class="matching-form-row">
+                                        <label for="q30" class="matching-form-label"><strong>30. Confident Voice Delivery</strong></label>
+                                        <select class="answer-input" id="q30" onchange="trackAnswer(30)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select><span id="ans-tag-30"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-30" onclick="highlightEvidence('misleading')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4 -->
+                    <div id="questions-4" class="question-set hidden">
+                        <div class="questions-container">
+                            <div class="question" data-q-start="31" data-q-end="40">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 31–40</strong></p>
+                                    <p>Complete the notes below.</p>
+                                    <p>Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+                                    <div class="question-title">Food Safety Standards</div>
+                                </div>
+                                <p><strong>Risk assessment</strong></p>
+                                <p>Scientists have to consider potential problems with:</p>
+                                <p>• the product's 31 <input type="text" class="answer-input" id="q31" placeholder="31" oninput="trackAnswer(31)"><span id="ans-tag-31"></span> (could they attract harmful bacteria?)</p>
+                                <div class="explanation-inline" id="exp-31" onclick="highlightEvidence('ingredients')"></div>
+                                <p>• method of preparation (will it eliminate harmful micro-organisms?)</p>
+                                <p>• how products are 32 <input type="text" class="answer-input" id="q32" placeholder="32" oninput="trackAnswer(32)"><span id="ans-tag-32"></span> and distributed</p>
+                                <div class="explanation-inline" id="exp-32" onclick="highlightEvidence('stored')"></div>
+                                <p>• supermarkets (e.g. changes in 33 <input type="text" class="answer-input" id="q33" placeholder="33" oninput="trackAnswer(33)"><span id="ans-tag-33"></span> affecting the condition of frozen food)</p>
+                                <div class="explanation-inline" id="exp-33" onclick="highlightEvidence('temperature fluctuated')"></div>
+                                <p>• end-users (how is food usually handled in the home?)</p>
+                                <br>
+                                <p><strong>Factors affecting food consumption</strong></p>
+                                <p>Legislation</p>
+                                <p>Consumer attitudes</p>
+                                <p>• e.g. dislike of additives → growth of the 34 <input type="text" class="answer-input" id="q34" placeholder="34" oninput="trackAnswer(34)"><span id="ans-tag-34"></span> food market in Australia</p>
+                                <div class="explanation-inline" id="exp-34" onclick="highlightEvidence('organic food')"></div>
+                                <br>
+                                <p>The food industry</p>
+                                <p>• supermarkets may use price or 35 <input type="text" class="answer-input" id="q35" placeholder="35" oninput="trackAnswer(35)"><span id="ans-tag-35"></span> as their selling strategy (but the main concern is profitability)</p>
+                                <div class="explanation-inline" id="exp-35" onclick="highlightEvidence('image is more important')"></div>
+                                <br>
+                                <p>The mass media</p>
+                                <p>• now the main source of 36 <input type="text" class="answer-input" id="q36" placeholder="36" oninput="trackAnswer(36)"><span id="ans-tag-36"></span> for many</p>
+                                <div class="explanation-inline" id="exp-36" onclick="highlightEvidence('source of information')"></div>
+                                <p>• negative effect because not objective:</p>
+                                <p>&nbsp;&nbsp;concern for 37 <input type="text" class="answer-input" id="q37" placeholder="37" oninput="trackAnswer(37)"><span id="ans-tag-37"></span></p>
+                                <div class="explanation-inline" id="exp-37" onclick="highlightEvidence('sales')"></div>
+                                <p>&nbsp;&nbsp;news is now a form of 38 <input type="text" class="answer-input" id="q38" placeholder="38" oninput="trackAnswer(38)"><span id="ans-tag-38"></span> which can mislead the public</p>
+                                <div class="explanation-inline" id="exp-38" onclick="highlightEvidence('entertainment')"></div>
+                                <p>• few programmes deal with food safety or 39 <input type="text" class="answer-input" id="q39" placeholder="39" oninput="trackAnswer(39)"><span id="ans-tag-39"></span></p>
+                                <div class="explanation-inline" id="exp-39" onclick="highlightEvidence('nutrition')"></div>
+                                <br>
+                                <p><strong>Personal opinion</strong></p>
+                                <p>Importance of education: as with benefits of exercise, many children can influence their 40 <input type="text" class="answer-input" id="q40" placeholder="40" oninput="trackAnswer(40)"><span id="ans-tag-40"></span></p>
+                                <div class="explanation-inline" id="exp-40" onclick="highlightEvidence('parents')"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- AUDIO SCRIPT PANEL -->
+                <div class="script-panel" id="scriptPanel">
+                    <div class="script-header">
+                        <h3>Audio Script & Evidence</h3>
+                        <button type="button" onclick="toggleScriptPanel()" style="background:none;border:none;font-size:18px;cursor:pointer;">&times;</button>
+                    </div>
+                    <div class="script-content" id="scriptContentContainer">
+                        <div id="script-1">
+                            <p><strong>Section 1:</strong></p>
+                            <p>WOMAN: We've got eight rooms altogether, and <span id="ev-38">we can sleep 38 at any one time.</span></p>
+                            <p>WOMAN: There's a large dining room and a large meeting room... but I'm afraid we had a flood in there last month, and the floor was slightly damaged, so <span id="ev-unavailable">unfortunately it's out of use just now.</span></p>
+                            <p>WOMAN: We're very flexible. <span id="ev-cater">As long as you give us enough notice, we can cater for you.</span></p>
+                            <p>WOMAN: One of the farm managers shows people around and <span id="ev-organic farming">explains some of the principles of organic farming.</span></p>
+                            <p>WOMAN: What it is, we've got a large area of woodland on the farm, and we run this course there. It's <span id="ev-collecting food">mainly about collecting food</span> and water...</p>
+                            <p>WOMAN: And there's also a <span id="ev-cycle path">cycle path</span> which starts quite near here, about ten minutes' walk away.</p>
+                            <p>WOMAN: It's only a small town, but it's got a very good <span id="ev-museum">museum</span> and an old abbey, which is well worth a visit.</p>
+                            <p>WOMAN: But once you've made a booking, we would need a <span id="ev-deposit">deposit</span> within five days to secure it.</p>
+                            <p>WOMAN: Yes. It's F Farm, <span id="ev-Cotehele">Cotehele</span> Road, that's C-O-T-E-H-E-L-E, near Sherbourne.</p>
+                            <p>WOMAN: And the postcode is <span id="ev-SH121LQ">S-H-12-1-L-Q</span>.</p>
+                        </div>
+                        <div id="script-2" style="margin-top:20px;">
+                            <p><strong>Section 2:</strong></p>
+                            <p>ROGER: The thing that students said they <span id="ev-travelling">enjoyed most about this job was the travelling.</span></p>
+                            <p>ROGER: they had any recommendations for other people taking on their job, and they said, perhaps not surprisingly, <span id="ev-good shoes">get good shoes.</span></p>
+                            <p>ROGER: The <span id="ev-formal clothes">downside, which many talked about, was wearing formal clothes.</span></p>
+                            <p>ROGER: The advice most people gave was to <span id="ev-large office">select a large office.</span></p>
+                            <p>ROGER: because the <span id="ev-good pay">big plus people talked about was good pay.</span></p>
+                            <p>ROGER: And people said that it was a <span id="ev-live nearby">good idea to live nearby</span>, because there's a lot of shift work...</p>
+                            <p>ROGER: Peter Marshall had <span id="ev-zoo website">read about work opportunities on the zoo website</span></p>
+                            <p>ROGER: In previous years, he'd done singularly unexciting shop work, so he was very <span id="ev-original work">pleased to be doing such original work.</span></p>
+                            <p>ROGER: He loved working on the educational side, in particular <span id="ev-young kids">helping young kids</span> understand about the animals in their natural environment.</p>
+                            <p>ROGER: He tells us, though, that with final exams coming up, he <span id="ev-won't be able">won't be able</span> to do any paid work this coming vacation</p>
+                        </div>
+                        <div id="script-3" style="margin-top:20px;">
+                            <p><strong>Section 3:</strong></p>
+                            <p>FIONA: And if all goes well, you'll then have <span id="ev-diploma">finished the final stage of your voice coach diploma.</span></p>
+                            <p>FIONA: all these can be represented diagrammatically, which would be clearer than going into lots of detailed explanations... ED: Oh, OK. But it <span id="ev-doesn't matter">doesn't matter</span> which one I use at the beginning of a workshop. FIONA: It's whatever you feel comfortable with.</p>
+                            <p>ED: aware of other people but <span id="ev-own thoughts">primarily concentrating on their own thoughts.</span></p>
+                            <p>FIONA: get them to think about their posture because that governs their lung capacity and, most crucially, their <span id="ev-breathing">breathing.</span></p>
+                            <p>FIONA: But there's no reason why you couldn't go somewhere <span id="ev-outdoors">outdoors.</span></p>
+                            <p>FIONA: Classical stuff is all well and good, but include many more <span id="ev-contemporary sources">contemporary sources.</span></p>
+                            <p>FIONA: Take Vocal Instruction... bear in mind it was <span id="ev-written 30 years ago">written 30 years ago</span> and it shows.</p>
+                            <p>FIONA: I thought Improve Your Accent was interesting, but it's very <span id="ev-narrow">narrow</span> in its outlook, don't you think?</p>
+                            <p>FIONA: And another one you need to warn people about is the Actor's Handbook... at the moment it's <span id="ev-out of print">out of print.</span></p>
+                            <p>FIONA: Confident Voice Delivery. It exaggerates its claims on how to be successful to such an extent that I think it is positively <span id="ev-misleading">misleading.</span></p>
+                        </div>
+                        <div id="script-4" style="margin-top:20px;">
+                            <p><strong>Section 4:</strong></p>
+                            <p>SPEAKER: Firstly, they have to consider the <span id="ev-ingredients">ingredients</span> of the product.</p>
+                            <p>SPEAKER: After that, they've got to consider the way products are <span id="ev-stored">stored</span>, for instance, in warehouses or cold stores</p>
+                            <p>SPEAKER: Things like frozen foods being defrosted and then refrozen because the <span id="ev-temperature fluctuated">temperature fluctuated</span></p>
+                            <p>SPEAKER: This has led to the phenomenal expansion of the market for <span id="ev-organic food">organic food</span> in Australia.</p>
+                            <p>SPEAKER: while for more upscale marketers, <span id="ev-image is more important">image is more important.</span></p>
+                            <p>SPEAKER: Finally, there is the influence of the mass media, which is the most important <span id="ev-source of information">source of information</span> for most people.</p>
+                            <p>SPEAKER: For one thing, the prime motivation of the media, as with the food industry, is <span id="ev-sales">sales</span></p>
+                            <p>SPEAKER: A further problem is that news is regarded as a type of <span id="ev-entertainment">entertainment.</span></p>
+                            <p>SPEAKER: Very few TV or radio shows address the issues, and even those shows that are devoted to cooking or eating generally ignore them (food safety and <span id="ev-nutrition">nutrition</span>).</p>
+                            <p>SPEAKER: We know that many children who have been taught about the benefits of exercise come home and lecture their <span id="ev-parents">parents</span> about it.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <button class="nav-arrow" onclick="previousQuestion()" id="prevBtn">‹</button>
+        <button class="nav-arrow" onclick="nextQuestion()" id="nextBtn">›</button>
+    </div>
+
+    <nav class="nav-row perScorableItem" aria-label="Questions">
+        <div class="footer__questionWrapper___1tZ46 multiple selected" role="tablist">
+            <button role="tab" class="footer__questionNo___3WNct" onclick="switchToPart(1)">
+                <span>
+                    <span aria-hidden="true" class="section-prefix">Part </span>
+                    <span class="sectionNr" aria-hidden="true">1</span>
+                    <span class="attemptedCount" aria-hidden="true">0 of 10</span>
+                </span>
+            </button>
+            <div class="footer__subquestionWrapper___9GgoP">
+                <button class="subQuestion scorable-item" id="sub-btn-1" onclick="goToQuestion(1)"><span class="sr-only">Question 1</span><span aria-hidden="true">1</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-2" onclick="goToQuestion(2)"><span class="sr-only">Question 2</span><span aria-hidden="true">2</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-3" onclick="goToQuestion(3)"><span class="sr-only">Question 3</span><span aria-hidden="true">3</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-4" onclick="goToQuestion(4)"><span class="sr-only">Question 4</span><span aria-hidden="true">4</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-5" onclick="goToQuestion(5)"><span class="sr-only">Question 5</span><span aria-hidden="true">5</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-6" onclick="goToQuestion(6)"><span class="sr-only">Question 6</span><span aria-hidden="true">6</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-7" onclick="goToQuestion(7)"><span class="sr-only">Question 7</span><span aria-hidden="true">7</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-8" onclick="goToQuestion(8)"><span class="sr-only">Question 8</span><span aria-hidden="true">8</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-9" onclick="goToQuestion(9)"><span class="sr-only">Question 9</span><span aria-hidden="true">9</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-10" onclick="goToQuestion(10)"><span class="sr-only">Question 10</span><span aria-hidden="true">10</span></button>
+            </div>
+        </div>
+        <div class="footer__questionWrapper___1tZ46 multiple" role="tablist">
+            <button role="tab" class="footer__questionNo___3WNct" onclick="switchToPart(2)">
+                <span>
+                    <span aria-hidden="true" class="section-prefix">Part </span>
+                    <span class="sectionNr" aria-hidden="true">2</span>
+                    <span class="attemptedCount" aria-hidden="true">0 of 10</span>
+                </span>
+            </button>
+            <div class="footer__subquestionWrapper___9GgoP">
+                <button class="subQuestion scorable-item" id="sub-btn-11" onclick="goToQuestion(11)"><span class="sr-only">Question 11</span><span aria-hidden="true">11</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-12" onclick="goToQuestion(12)"><span class="sr-only">Question 12</span><span aria-hidden="true">12</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-13" onclick="goToQuestion(13)"><span class="sr-only">Question 13</span><span aria-hidden="true">13</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-14" onclick="goToQuestion(14)"><span class="sr-only">Question 14</span><span aria-hidden="true">14</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-15" onclick="goToQuestion(15)"><span class="sr-only">Question 15</span><span aria-hidden="true">15</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-16" onclick="goToQuestion(16)"><span class="sr-only">Question 16</span><span aria-hidden="true">16</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-17" onclick="goToQuestion(17)"><span class="sr-only">Question 17</span><span aria-hidden="true">17</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-18" onclick="goToQuestion(18)"><span class="sr-only">Question 18</span><span aria-hidden="true">18</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-19" onclick="goToQuestion(19)"><span class="sr-only">Question 19</span><span aria-hidden="true">19</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-20" onclick="goToQuestion(20)"><span class="sr-only">Question 20</span><span aria-hidden="true">20</span></button>
+            </div>
+        </div>
+        <div class="footer__questionWrapper___1tZ46 multiple" role="tablist">
+            <button role="tab" class="footer__questionNo___3WNct" onclick="switchToPart(3)">
+                <span>
+                    <span aria-hidden="true" class="section-prefix">Part </span>
+                    <span class="sectionNr" aria-hidden="true">3</span>
+                    <span class="attemptedCount" aria-hidden="true">0 of 10</span>
+                </span>
+            </button>
+            <div class="footer__subquestionWrapper___9GgoP">
+                <button class="subQuestion scorable-item" id="sub-btn-21" onclick="goToQuestion(21)"><span class="sr-only">Question 21</span><span aria-hidden="true">21</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-22" onclick="goToQuestion(22)"><span class="sr-only">Question 22</span><span aria-hidden="true">22</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-23" onclick="goToQuestion(23)"><span class="sr-only">Question 23</span><span aria-hidden="true">23</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-24" onclick="goToQuestion(24)"><span class="sr-only">Question 24</span><span aria-hidden="true">24</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-25" onclick="goToQuestion(25)"><span class="sr-only">Question 25</span><span aria-hidden="true">25</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-26" onclick="goToQuestion(26)"><span class="sr-only">Question 26</span><span aria-hidden="true">26</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-27" onclick="goToQuestion(27)"><span class="sr-only">Question 27</span><span aria-hidden="true">27</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-28" onclick="goToQuestion(28)"><span class="sr-only">Question 28</span><span aria-hidden="true">28</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-29" onclick="goToQuestion(29)"><span class="sr-only">Question 29</span><span aria-hidden="true">29</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-30" onclick="goToQuestion(30)"><span class="sr-only">Question 30</span><span aria-hidden="true">30</span></button>
+            </div>
+        </div>
+        <div class="footer__questionWrapper___1tZ46 multiple" role="tablist">
+            <button role="tab" class="footer__questionNo___3WNct" onclick="switchToPart(4)">
+                <span>
+                    <span aria-hidden="true" class="section-prefix">Part </span>
+                    <span class="sectionNr" aria-hidden="true">4</span>
+                    <span class="attemptedCount" aria-hidden="true">0 of 10</span>
+                </span>
+            </button>
+            <div class="footer__subquestionWrapper___9GgoP">
+                <button class="subQuestion scorable-item" id="sub-btn-31" onclick="goToQuestion(31)"><span class="sr-only">Question 31</span><span aria-hidden="true">31</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-32" onclick="goToQuestion(32)"><span class="sr-only">Question 32</span><span aria-hidden="true">32</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-33" onclick="goToQuestion(33)"><span class="sr-only">Question 33</span><span aria-hidden="true">33</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-34" onclick="goToQuestion(34)"><span class="sr-only">Question 34</span><span aria-hidden="true">34</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-35" onclick="goToQuestion(35)"><span class="sr-only">Question 35</span><span aria-hidden="true">35</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-36" onclick="goToQuestion(36)"><span class="sr-only">Question 36</span><span aria-hidden="true">36</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-37" onclick="goToQuestion(37)"><span class="sr-only">Question 37</span><span aria-hidden="true">37</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-38" onclick="goToQuestion(38)"><span class="sr-only">Question 38</span><span aria-hidden="true">38</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-39" onclick="goToQuestion(39)"><span class="sr-only">Question 39</span><span aria-hidden="true">39</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-40" onclick="goToQuestion(40)"><span class="sr-only">Question 40</span><span aria-hidden="true">40</span></button>
+            </div>
+        </div>
+        <button id="deliver-button" aria-label="Review your answers" class="footer__deliverButton___3FM07">
+            <i class="fa fa-check" aria-hidden="true"></i>
+            <span>Check Answers</span>
+        </button>
+    </nav>
+
+    <div id="contextMenu" class="context-menu">
+        <div id="menu-highlight" class="context-menu-item" onclick="highlightText()">
+            Highlight (Yellow)
+        </div>
+    </div>
+
+    <div id="results-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeResultsModal()">&times;</button>
+            <h2>Results</h2>
+            <div id="submit-status" style="display: none; text-align: center; margin-bottom: 15px; padding: 10px; border-radius: 4px; font-weight: bold;"></div>
+            <div class="results-summary">
+                <p>Score: <span id="results-score"></span> / 40</p>
+                <p>IELTS Band: <span id="results-band"></span></p>
+            </div>
+            <div id="results-details" class="results-details-container"></div>
+        </div>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby7tYg_WIbxhkhK8NpoHs7s5GW3svAD56ZswWfimJgR-NMnzbbmTCBXwchyqhCI69pa/exec";
+
+        window.testMeta = {
+            "totalQuestions": 40,
+            "parts": [
+                {"part": 1, "start": 1, "end": 10},
+                {"part": 2, "start": 11, "end": 20},
+                {"part": 3, "start": 21, "end": 30},
+                {"part": 4, "start": 31, "end": 40}
+            ],
+            "correctAnswers": {
+                "1": "C", "2": "A", "3": "B", "4": "A", "5": "B", 
+                "6": "C", "7": "C", "8": "A", 
+                "9": "Cotehele", "10": "SH121LQ",
+                "11": "travelling", "12": "get good shoes", "13": "wearing formal clothes", 
+                "14": "large office", "15": "good pay", "16": "live nearby", 
+                "17": "B", "18": "C", "19": "B", "20": "A",
+                "21": "B", "22": "C", "23": "C", "24": "C", "25": "A", "26": "C", 
+                "27": "E", "28": "B", "29": "G", "30": "D",
+                "31": "ingredients", "32": "stored", "33": "temperature", "34": "organic", "35": "image",
+                "36": "information", "37": "sales", "38": "entertainment", "39": ["nutritions", "nutrition"], "40": "parents"
+            }
+        };
+
+        window.testExplanations = {
+            "1": "Giải thích: Transcript: 'we can sleep 38 at any one time.' (Bấm để xem Script)",
+            "2": "Giải thích: Transcript: 'unfortunately it's out of use just now.' (Bấm để xem Script)",
+            "3": "Giải thích: Transcript: 'As long as you give us enough notice, we can cater for you.' (Bấm để xem Script)",
+            "4": "Giải thích: Transcript: 'explains some of the principles of organic farming.' (Bấm để xem Script)",
+            "5": "Giải thích: Transcript: 'It's mainly about collecting food and water...' (Bấm để xem Script)",
+            "6": "Giải thích: Transcript: 'And there's also a cycle path which starts quite near here, about ten minutes' walk away.' (Bấm để xem Script)",
+            "7": "Giải thích: Transcript: 'It's only a small town, but it's got a very good museum' (Bấm để xem Script)",
+            "8": "Giải thích: Transcript: 'But once you've made a booking, we would need a deposit within five days to secure it.' (Bấm để xem Script)",
+            "9": "Giải thích: Transcript: 'Yes. It's F Farm, Cotehele Road, that's C-O-T-E-H-E-L-E, near Sherbourne.' (Bấm để xem Script)",
+            "10": "Giải thích: Transcript: 'And the postcode is S-H-12-1-L-Q.' (Bấm để xem Script)",
+            "11": "Giải thích: Transcript: 'enjoyed most about this job was the travelling.' (Bấm để xem Script)",
+            "12": "Giải thích: Transcript: 'get good shoes.' (Bấm để xem Script)",
+            "13": "Giải thích: Transcript: 'downside ... was wearing formal clothes.' (Bấm để xem Script)",
+            "14": "Giải thích: Transcript: 'The advice most people gave was to select a large office.' (Bấm để xem Script)",
+            "15": "Giải thích: Transcript: 'big plus people talked about was good pay.' (Bấm để xem Script)",
+            "16": "Giải thích: Transcript: 'good idea to live nearby' (Bấm để xem Script)",
+            "17": "Giải thích: Transcript: 'read about work opportunities on the zoo website' (Bấm để xem Script)",
+            "18": "Giải thích: Transcript: 'pleased to be doing such original work.' (Bấm để xem Script)",
+            "19": "Giải thích: Transcript: 'helping young kids understand about the animals' (Bấm để xem Script)",
+            "20": "Giải thích: Transcript: 'won't be able to do any paid work this coming vacation' (Bấm để xem Script)",
+            "21": "Giải thích: Transcript: 'finished the final stage of your voice coach diploma.' (Bấm để xem Script)",
+            "22": "Giải thích: Transcript: 'But it doesn't matter which one I use at the beginning of a workshop. It's whatever you feel comfortable with.' (Bấm để xem Script)",
+            "23": "Giải thích: Transcript: 'primarily concentrating on their own thoughts.' (Bấm để xem Script)",
+            "24": "Giải thích: Transcript: 'get them to think about their posture because that governs their lung capacity and, most crucially, their breathing.' (Bấm để xem Script)",
+            "25": "Giải thích: Transcript: 'But there's no reason why you couldn't go somewhere outdoors.' (Bấm để xem Script)",
+            "26": "Giải thích: Transcript: 'include many more contemporary sources.' (Bấm để xem Script)",
+            "27": "Giải thích: Transcript: 'written 30 years ago and it shows.' (Bấm để xem Script)",
+            "28": "Giải thích: Transcript: 'very narrow in its outlook' (Bấm để xem Script)",
+            "29": "Giải thích: Transcript: 'at the moment it's out of print.' (Bấm để xem Script)",
+            "30": "Giải thích: Transcript: 'positively misleading.' (Bấm để xem Script)",
+            "31": "Giải thích: Transcript: 'Firstly, they have to consider the ingredients of the product.' (Bấm để xem Script)",
+            "32": "Giải thích: Transcript: 'After that, they've got to consider the way products are stored' (Bấm để xem Script)",
+            "33": "Giải thích: Transcript: 'Things like frozen foods being defrosted and then refrozen because the temperature fluctuated' (Bấm để xem Script)",
+            "34": "Giải thích: Transcript: 'expansion of the market for organic food in Australia.' (Bấm để xem Script)",
+            "35": "Giải thích: Transcript: 'while for more upscale marketers, image is more important.' (Bấm để xem Script)",
+            "36": "Giải thích: Transcript: 'most important source of information for most people.' (Bấm để xem Script)",
+            "37": "Giải thích: Transcript: 'the prime motivation of the media, as with the food industry, is sales' (Bấm để xem Script)",
+            "38": "Giải thích: Transcript: 'news is regarded as a type of entertainment.' (Bấm để xem Script)",
+            "39": "Giải thích: Transcript: 'Very few TV or radio shows address the issues, and even those shows that are devoted to cooking or eating generally ignore them.' (Bấm để xem Script)",
+            "40": "Giải thích: Transcript: 'many children who have been taught about the benefits of exercise come home and lecture their parents about it.' (Bấm để xem Script)"
+        };
+
+        let currentPart = 1;
+        
+        function switchToPart(partNumber) {
+            currentPart = partNumber;
+            document.querySelectorAll('.question-set').forEach(el => el.classList.add('hidden'));
+            document.getElementById('questions-' + partNumber).classList.remove('hidden');
+
+            document.querySelectorAll('.part-header').forEach(el => el.classList.add('hidden'));
+            document.getElementById('part-header-' + partNumber).classList.remove('hidden');
+
+            document.querySelectorAll('.footer__questionWrapper___1tZ46').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.footer__questionWrapper___1tZ46')[partNumber - 1].classList.add('selected');
+        }
+
+        function goToQuestion(qNum) {
+            for (let p of window.testMeta.parts) {
+                if (qNum >= p.start && qNum <= p.end) {
+                    switchToPart(p.part);
+                    break;
+                }
+            }
+            const el = document.getElementById('q' + qNum) || document.querySelector(`[name="q${qNum}"]`);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (el.tagName === 'INPUT' && el.type === 'text') el.focus();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentPart < 4) switchToPart(currentPart + 1);
+        }
+
+        function previousQuestion() {
+            if (currentPart > 1) switchToPart(currentPart - 1);
+        }
+
+        function updateSubQuestionStatus(qNum, isAnswered) {
+            const btn = document.getElementById('sub-btn-' + qNum);
+            if (btn) {
+                if (isAnswered) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+            }
+        }
+
+        function trackAnswer(qNum) {
+            const input = document.getElementById('q' + qNum);
+            if (input) {
+                updateSubQuestionStatus(qNum, input.value.trim().length > 0);
+            }
+        }
+
+        function trackCheckbox(qStart) {
+            const checkboxes = document.querySelectorAll(`[name="q${qStart}_${qStart+1}"]`) || document.querySelectorAll(`[name="q${qStart}"]`);
+            let answered = false;
+            checkboxes.forEach(cb => { if (cb.checked) answered = true; });
+            updateSubQuestionStatus(qStart, answered);
+        }
+
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('answer-input') && e.target.id.startsWith('q')) {
+                const qNum = e.target.id.replace('q', '');
+                updateSubQuestionStatus(qNum, e.target.value.trim().length > 0);
+            }
+        });
+
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                const qNum = e.target.name.replace('q', '');
+                updateSubQuestionStatus(qNum, true);
+            } else if (e.target.tagName === 'SELECT') {
+                const qNum = e.target.id.replace('q', '');
+                updateSubQuestionStatus(qNum, e.target.value.trim().length > 0);
+            } else if (e.target.type === 'checkbox') {
+                const name = e.target.name;
+                if (name) {
+                    const qNum = name.replace('q', '').split('_')[0];
+                    trackCheckbox(parseInt(qNum));
+                }
+            }
+        });
+
+        function toggleScriptPanel() {
+            const panel = document.getElementById('scriptPanel');
+            panel.classList.toggle('active');
+        }
+
+        function highlightEvidence(keyword) {
+            const panel = document.getElementById('scriptPanel');
+            panel.classList.add('active');
+
+            document.querySelectorAll('.script-content span').forEach(el => {
+                el.classList.remove('highlight-evidence');
+            });
+
+            const targetEl = document.getElementById('ev-' + keyword);
+            if (targetEl) {
+                targetEl.classList.add('highlight-evidence');
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        document.getElementById('startNormalBtn').addEventListener('click', function() {
+            document.getElementById('launchScreen').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F11') {
+                document.getElementById('launchScreen').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+            }
+        });
+
+        document.getElementById('deliver-button').addEventListener('click', function() {
+            const studentName = document.getElementById('studentName').value.trim();
+            const studentClass = document.getElementById('studentClass').value.trim();
+            
+            if (!studentName || !studentClass) {
+                alert("Vui lòng điền đầy đủ Họ và tên và Lớp trước khi nộp bài!");
+                document.getElementById('studentName').focus();
+                return;
+            }
+
+            let score = 0;
+            const answers = window.testMeta.correctAnswers;
+            const detailsContainer = document.getElementById('results-details');
+            detailsContainer.innerHTML = '';
+
+            document.getElementById('scriptToggleBtn').classList.remove('hidden');
+
+            for (let i = 1; i <= 40; i++) {
+                let userAns = "";
+                const input = document.getElementById('q' + i);
+                if (input) {
+                    userAns = input.value.trim();
+                } else {
+                    const radios = document.querySelectorAll(`[name="q${i}"]`);
+                    radios.forEach(r => { if (r.checked) userAns = r.value; });
+                    
+                    let checkboxGroup = document.querySelectorAll(`[name="q${i}_${i+1}"]`);
+                    if (checkboxGroup.length === 0) checkboxGroup = document.querySelectorAll(`[name="q${i-1}_${i}"]`);
+                    if (checkboxGroup.length === 0) checkboxGroup = document.querySelectorAll(`[name="q${i}"]`);
+
+                    if (checkboxGroup.length > 0 && checkboxGroup[0].type === 'checkbox') {
+                        let checkedVals = [];
+                        checkboxGroup.forEach(cb => { if (cb.checked) checkedVals.push(cb.value); });
+                        
+                        let groupName = checkboxGroup[0].name;
+                        if (groupName.includes('_')) {
+                            let parts = groupName.replace('q', '').split('_');
+                            let indexInGroup = parts.indexOf(i.toString());
+                            userAns = checkedVals[indexInGroup] || "";
+                        } else {
+                            userAns = checkedVals;
+                        }
+                    }
+                }
+
+                let correct = answers[i];
+                let isCorrect = false;
+
+                if (Array.isArray(correct)) {
+                    if (Array.isArray(userAns)) {
+                        isCorrect = correct.slice().sort().join() === userAns.slice().sort().join();
+                    } else if (typeof userAns === 'string') {
+                        isCorrect = correct.some(ans => ans.toString().toLowerCase() === userAns.toLowerCase());
+                    }
+                } else {
+                    if (typeof userAns === 'string' && typeof correct === 'string') {
+                        isCorrect = userAns.toLowerCase() === correct.toLowerCase();
+                    }
+                }
+
+                if (isCorrect) score++;
+
+                const tag = document.getElementById('ans-tag-' + i);
+                if (tag) {
+                    let correctDisplay = Array.isArray(correct) ? correct.join(', ') : correct;
+                    tag.innerHTML = `<span class="correct-tag">→ ${correctDisplay}</span>`;
+                }
+
+                const expBox = document.getElementById('exp-' + i);
+                if (expBox && window.testExplanations[i]) {
+                    expBox.style.display = 'block';
+                    expBox.innerHTML = `${window.testExplanations[i]}`;
+                }
+
+                const subBtn = document.getElementById('sub-btn-' + i);
+                if (subBtn) {
+                    subBtn.classList.remove('correct', 'incorrect', 'answered');
+                    subBtn.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+
+                const row = document.createElement('div');
+                row.className = `result-row ${isCorrect ? '' : 'incorrect'}`;
+                row.innerHTML = `<span class="q-num">${i}</span><span class="user-ans">${Array.isArray(userAns)?userAns.join(', '):userAns}</span><span class="correct-ans">${Array.isArray(correct)?correct.join(', '):correct}</span>`;
+                detailsContainer.appendChild(row);
+            }
+
+            document.getElementById('results-score').innerText = score;
+            let band = "0";
+            if (score >= 39) band = "9.0";
+            else if (score >= 37) band = "8.5";
+            else if (score >= 35) band = "8.0";
+            else if (score >= 32) band = "7.5";
+            else if (score >= 30) band = "7.0";
+            else if (score >= 27) band = "6.5";
+            else if (score >= 23) band = "6.0";
+            else if (score >= 19) band = "5.5";
+            else if (score >= 15) band = "5.0";
+            else if (score >= 13) band = "4.5";
+            else if (score >= 11) band = "4.0";
+            else if (score >= 9) band = "3.5";
+            else band = "3.0 hoặc thấp hơn";
+
+            document.getElementById('results-band').innerText = band;
+            document.getElementById('results-modal').classList.remove('hidden');
+            
+            isTimerPaused = true;
+
+            const statusDiv = document.getElementById('submit-status');
+            statusDiv.style.display = 'block';
+            statusDiv.style.backgroundColor = '#fff3cd';
+            statusDiv.style.color = '#856404';
+            statusDiv.textContent = '⏳ Đang gửi kết quả về hệ thống...';
+
+            const testName = document.getElementById('launchTestTitle').textContent.trim() || document.title;
+            const timeTakenSeconds = (40 * 60) - totalSeconds;
+            const timeTakenStr = Math.floor(timeTakenSeconds / 60) + " phút " + (timeTakenSeconds % 60) + " giây";
+            
+            const now = new Date();
+            const currentTime = now.toLocaleTimeString('vi-VN', { hour12: false }) + ' ' + now.toLocaleDateString('vi-VN');
+
+            const payload = {
+                "Time": currentTime,
+                "time": currentTime,
+                "submitDate": currentTime,
+                "Name": studentName,
+                "studentName": studentName,
+                "Class": studentClass,
+                "studentClass": studentClass,
+                "Correct answer": score + "/40",
+                "score": score + "/40",
+                "total time": timeTakenStr,
+                "timeTaken": timeTakenStr,
+                "Test name": testName,
+                "testName": testName,
+                "examTitle": testName,
+                "bandScore": band,
+                "band": band
+            };
+
+            if (WEBHOOK_URL && WEBHOOK_URL.includes('script.google.com')) {
+                const formBody = new URLSearchParams(payload).toString();
+
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formBody
+                }).then(() => {
+                    statusDiv.style.backgroundColor = '#d4edda';
+                    statusDiv.style.color = '#155724';
+                    statusDiv.textContent = '✅ Kết quả đã được ghi nhận và gửi thành công!';
+                }).catch(err => {
+                    console.error("Lỗi gửi dữ liệu webhook: ", err);
+                    statusDiv.style.backgroundColor = '#f8d7da';
+                    statusDiv.style.color = '#721c24';
+                    statusDiv.textContent = '⚠️ Có lỗi xảy ra khi gửi. Vui lòng kiểm tra lại kết nối.';
+                });
+            }
+        });
+
+        function closeResultsModal() {
+            document.getElementById('results-modal').classList.add('hidden');
+        }
+
+        document.addEventListener('mouseup', function(e) {
+            const selection = window.getSelection();
+            if (!selection.isCollapsed && selection.toString().trim().length > 0) {
+                const range = selection.getRangeAt(0);
+                const span = document.createElement('span');
+                span.className = 'annotation-highlight';
+                span.appendChild(range.extractContents());
+                range.insertNode(span);
+                selection.removeAllRanges();
+            }
+        });
+
+        const audioPlayer = document.getElementById('audio-player');
+        const playPauseBtn = document.getElementById('audio-play-pause');
+        const progressBar = document.getElementById('audio-progress');
+        const currentTimer = document.getElementById('audio-current');
+        const durationTimer = document.getElementById('audio-duration');
+        const speedBtn = document.getElementById('audio-speed-btn');
+        const speedOptions = document.getElementById('audio-speed-options');
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play().catch(error => {
+                    alert("Trình duyệt chặn phát file audio trực tiếp. Hãy kiểm tra tệp audio đã đặt cùng thư mục với file HTML này chưa.");
+                });
+                playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+            } else {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>';
+            }
+        });
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            if (!isNaN(audioPlayer.duration)) {
+                const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.value = progressPercent;
+                currentTimer.textContent = formatTime(audioPlayer.currentTime);
+                durationTimer.textContent = formatTime(audioPlayer.duration);
+            }
+        });
+
+        progressBar.addEventListener('input', () => {
+            if (!isNaN(audioPlayer.duration)) {
+                const seekTime = (progressBar.value / 100) * audioPlayer.duration;
+                audioPlayer.currentTime = seekTime;
+            }
+        });
+
+        speedBtn.addEventListener('click', () => {
+            speedOptions.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.audio-speed-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const speed = parseFloat(option.getAttribute('data-speed'));
+                audioPlayer.playbackRate = speed;
+                speedBtn.textContent = speed + 'x';
+                speedOptions.classList.add('hidden');
+            });
+        });
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            durationTimer.textContent = formatTime(audioPlayer.duration);
+        });
+
+        let totalSeconds = 40 * 60;
+        let isTimerPaused = false;
+        const timerDisplay = document.querySelector('.timer-display');
+        
+        function updateTimer() {
+            if (!isTimerPaused && totalSeconds > 0) {
+                totalSeconds--;
+                const mins = Math.floor(totalSeconds / 60);
+                const secs = totalSeconds % 60;
+                timerDisplay.textContent = `${mins} minutes ${secs < 10 ? '0' : ''}${secs} remaining`;
+            }
+        }
+        setInterval(updateTimer, 1000);
+
+        document.getElementById('timer-toggle-btn').addEventListener('click', () => {
+            isTimerPaused = !isTimerPaused;
+        });
+
+        document.getElementById('timer-reset-btn').addEventListener('click', () => {
+            totalSeconds = 40 * 60;
+            isTimerPaused = false;
+        });
+    </script>
+</body>
+</html>
