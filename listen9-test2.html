@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@600&display=swap" rel="stylesheet">
+    <title>V9 - TEST 2 - IELTS Listening Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            background-color: #ffffff;
+            line-height: 1.5;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(120deg, #e9eefb, #dfe7ff, #e9eefb);
+            background-size: 200% 200%;
+            animation: bannerFlow 8s ease-in-out infinite;
+            padding: 10px 20px;
+            border-bottom: 1px solid #d7def5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 60px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+            flex: 1 1 auto;
+            justify-content: flex-start;
+        }
+
+        .audio-bar {
+            position: sticky;
+            top: 60px;
+            z-index: 95;
+            background: #f7f9fc;
+            border-bottom: 1px solid #e0e7ff;
+            padding: 12px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1 1 420px;
+            min-width: 260px;
+        }
+
+        #audio-play-pause {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid #d5ddf7;
+            background: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        #audio-play-pause:hover {
+            box-shadow: 0 10px 24px rgba(33, 58, 128, 0.12);
+            transform: translateY(-1px);
+        }
+
+        #audio-progress {
+            flex: 1;
+            accent-color: #4a90e2;
+            cursor: pointer;
+        }
+
+        .audio-time {
+            font-family: monospace;
+            font-size: 13px;
+            color: #3a3f63;
+            min-width: 84px;
+            text-align: right;
+        }
+
+        .audio-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            flex: 0 0 auto;
+        }
+
+        .audio-speed {
+            position: relative;
+        }
+
+        #audio-speed-btn {
+            border: 1px solid #d5ddf7;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1c2566;
+        }
+
+        #audio-speed-options {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #dfe7ff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(33, 58, 128, 0.15);
+            overflow: hidden;
+            min-width: 110px;
+        }
+
+        .audio-speed-option {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .audio-speed-option:hover {
+            background: #f1f5ff;
+        }
+
+        .script-toggle-btn {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .script-toggle-btn:hover {
+            background: #357abd;
+        }
+
+        .header-ad {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 14px;
+            border: 1px solid rgba(215, 222, 245, 0.9);
+            background: rgba(255, 255, 255, 0.24);
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 10px 24px rgba(33, 58, 128, 0.12);
+            min-width: 180px;
+            max-width: calc(100% - 70px);
+            height: 48px;
+            overflow: hidden;
+        }
+        .ad-copy {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            overflow: hidden;
+        }
+        .ad-eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #6b7ac7;
+            font-weight: 700;
+        }
+        .ad-marquee {
+            display: flex;
+            gap: 24px;
+            width: 100%;
+            align-items: center;
+        }
+        .ad-headline {
+            font-size: 15px;
+            font-weight: 800;
+            color: #1c2566;
+            white-space: nowrap;
+        }
+        .ad-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #cdd6f5;
+            background: rgba(255, 255, 255, 0.7);
+            color: #46507a;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 800;
+            margin-left: 6px;
+        }
+        @keyframes bannerFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-container {
+            margin-top: 90px;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            min-height: calc(100vh - 170px);
+            padding-bottom: 80px;
+        }
+
+        .student-form-container {
+            background-color: #f7f9fc;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e7ff;
+            margin: 0 20px 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .student-form-container h3 {
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #1f2b59;
+        }
+        
+        .student-inputs {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .student-input-field {
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .panels-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            position: relative;
+        }
+
+        .questions-panel {
+            padding: 10px 20px 40px;
+            overflow-y: auto;
+            flex: 1;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        .script-panel {
+            width: 420px;
+            min-width: 350px;
+            border-left: 1px solid #e0e0e0;
+            background: #fbfbfc;
+            padding: 20px;
+            overflow-y: auto;
+            height: calc(100vh - 170px);
+            position: sticky;
+            top: 110px;
+            display: none;
+        }
+        .script-panel.active {
+            display: block;
+        }
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 8px;
+        }
+        .script-content {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            word-wrap: break-word;
+        }
+        .script-content p {
+            margin-bottom: 12px;
+        }
+        .highlight-evidence {
+            background-color: #bbf7d0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .nav-row {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            height: 80px;
+            z-index: 100;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer__questionWrapper___1tZ46 {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .footer__questionNo___3WNct {
+            background: none;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .footer__questionNo___3WNct:hover {
+            background-color: #f8f9fa;
+        }
+
+        .section-prefix {
+            font-size: 16px;
+        }
+
+        .sectionNr {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .attemptedCount {
+            font-size: 14px;
+            color: #666;
+            margin-left: 5px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .attemptedCount {
+                display: none;
+            }
+        }
+
+        .footer__questionWrapper___1tZ46.selected .attemptedCount {
+            display: none;
+        }
+
+        .footer__subquestionWrapper___9GgoP {
+            display: none;
+            gap: 2px;
+            margin-left: 10px;
+        }
+
+        .footer__questionWrapper___1tZ46.selected .footer__subquestionWrapper___9GgoP {
+            display: flex;
+        }
+
+        .subQuestion {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #ccc;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            border-radius: 2px;
+        }
+
+        .subQuestion.correct {
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        .subQuestion.incorrect {
+            background-color: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+        .subQuestion.answered {
+            background-color: #0284c7;
+            border-color: #0284c7;
+            color: white;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .footer__deliverButton___3FM07 {
+            margin-left: auto;
+            margin-right: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s, border-color 0.2s;
+            min-width: 170px;
+            justify-content: center;
+        }
+
+        .footer__deliverButton___3FM07:hover {
+            background-color: #e0e0e0;
+            border-color: #bbb;
+        }
+
+        .fa-check::before {
+            content: "✓";
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .context-menu {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            min-width: 140px;
+        }
+
+        .context-menu-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .context-menu-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .context-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .annotation-highlight {
+            background-color: #fff3a3;
+            border-radius: 4px;
+            padding: 0 2px;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .question {
+            margin-bottom: 40px;
+        }
+        .question p {
+            margin-bottom: 10px;
+        }
+        .question-title {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            margin: 6px 0 10px;
+            color: #000;
+        }
+        .answer-input {
+            border: 1px solid #888;
+            border-radius: 4px;
+            background-color: #fff;
+            padding: 2px 5px;
+            font-size: 16px;
+            text-align: center;
+            margin-right: 4px;
+            margin-left: 4px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            height: 28px;
+            width: 150px;
+            z-index: 10;
+            position: relative;
+        }
+        .answer-input.correct {
+            border-color: #28a745;
+            background-color: #e9f7ef;
+        }
+        .answer-input.incorrect {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .questions-container {
+            width: 100%;
+        }
+        audio {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .part-header {
+            background-color: #f1f2ec;
+            padding: 10px 16px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+            margin: 8px 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .mcq-question-text {
+            margin: 0 0 10px 0;
+            color: #111827;
+            font-weight: 400;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .mcq-question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 26px;
+            height: 26px;
+            padding: 2px 8px;
+            border: 2px solid #ccc;
+            border-radius: 3px;
+            background: #fff;
+            font-weight: 700;
+            color: #1f2b4d;
+            font-size: 13px;
+            line-height: 1;
+        }
+        .multi-choice-question {
+            margin-bottom: 22px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 3px solid transparent;
+        }
+        .multi-choice-option {
+            margin: 10px 0;
+            font-size: 15px;
+            color: #111827;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .multi-choice-option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .multi-choice-option input[type="checkbox"],
+        .multi-choice-option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: #4a90e2;
+        }
+        .timer-container {
+            display: flex;
+            position: relative;
+            cursor: default;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            align-items: center;
+            gap: 12px;
+            flex: 0 0 auto;
+            min-width: 220px;
+            padding: 4px 10px;
+            border-radius: 14px;
+            border: 1px solid #d7def5;
+            background: rgba(255, 255, 255, 0.24);
+            box-shadow: 0 8px 18px rgba(33, 58, 128, 0.08);
+        }
+        .timer-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 15px;
+        }
+        .timer-controls button {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            padding: 0;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        .timer-controls button:hover {
+            background: #e0e0e0;
+        }
+        .timer-controls button svg {
+            width: 20px;
+            height: 20px;
+            fill: #333;
+        }
+        .matching-form-container {
+            margin-top: 20px;
+        }
+        .matching-form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+        .matching-form-label {
+            width: auto;
+            flex: 1 1 320px;
+            margin-right: 8px;
+        }
+        .matching-form-row select.answer-input {
+            width: 220px;
+            flex-shrink: 0;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.hidden {
+            display: none;
+        }
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #888;
+        }
+        .modal-content h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .results-summary {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .results-details-container {
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .result-row {
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr;
+            gap: 15px;
+            padding: 8px 5px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+        .result-row.incorrect {
+            background-color: #f8d7da;
+        }
+        .result-row .q-num {
+            font-weight: bold;
+        }
+        .result-row .user-ans {
+            color: #555;
+        }
+        .result-row .correct-ans {
+            color: #155724;
+            font-weight: 500;
+        }
+        .explanation-inline {
+            background-color: #e9f7ef;
+            border: 1px solid #28a745;
+            padding: 6px 10px;
+            margin-top: 6px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #155724;
+            display: none;
+            cursor: pointer;
+        }
+        .explanation-inline:hover {
+            background-color: #d4edda;
+        }
+        .correct-tag {
+            background-color: #28a745;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-left: 8px;
+            display: inline-block;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        #launchScreen, #app {
+            width: 100vw;
+            height: 100vh;
+        }
+        #app {
+            display: none;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        #launchScreen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(206, 219, 255, 0.48), transparent 34%),
+                radial-gradient(circle at 100% 100%, rgba(221, 229, 255, 0.44), transparent 38%),
+                #f4f6fc;
+            color: #1f2b59;
+        }
+        .launch-card {
+            width: min(980px, 100%);
+            border: 1px solid #d7def5;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #ffffff, #f7f9ff);
+            box-shadow: 0 16px 38px rgba(33, 58, 128, 0.14);
+            padding: 28px 30px 22px;
+            display: grid;
+            gap: 12px;
+        }
+        .launch-eyebrow {
+            margin: 0;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #6f7cb2;
+            font-weight: 700;
+        }
+        .launch-title {
+            margin: 4px 0 0;
+            font-size: clamp(26px, 3.5vw, 40px);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: #1c2566;
+        }
+        .launch-meta {
+            margin: 8px 0 0;
+            color: #3c4a81;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .launch-guide {
+            border: 1px solid #d7def5;
+            border-radius: 12px;
+            background: #f2f5ff;
+            padding: 14px;
+            display: grid;
+            gap: 6px;
+        }
+        .launch-main {
+            margin: 0;
+            font-size: clamp(18px, 2.2vw, 23px);
+            line-height: 1.32;
+            font-weight: 700;
+            color: #1d2a60;
+        }
+        .launch-sub {
+            margin: 0;
+            color: #4c598f;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .launch-notes {
+            margin: 0;
+            padding-left: 18px;
+            display: grid;
+            gap: 6px;
+            color: #3f4e83;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+        .launch-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .launch-btn {
+            border: 1px solid #c5d0f2;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 11px 16px;
+            color: #24336e;
+            background: #ffffff;
+            transition: transform 0.12s ease;
+            box-shadow: 0 8px 20px rgba(35, 54, 110, 0.14);
+        }
+        .launch-btn:hover {
+            transform: translateY(-1px);
+            background: #f6f8ff;
+        }
+        .launch-foot {
+            border-top: 1px dashed #d2daf3;
+            padding-top: 10px;
+            font-size: 13px;
+            color: #5f6da6;
+        }
+
+        /* Flow-chart styling */
+        .flow-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .flow-box {
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            padding: 12px 20px;
+            background-color: #f9fbfd;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .flow-arrow {
+            font-size: 24px;
+            color: #4a90e2;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="launchScreen" aria-label="Launch screen">
+        <div class="launch-card">
+            <div>
+                <p class="launch-eyebrow">IELTS Test Launcher</p>
+                <h1 class="launch-title" id="launchTestTitle">V9 - TEST 2 - IELTS Listening Practice</h1>
+                <p class="launch-meta">Dạng bài: Listening</p>
+            </div>
+            <div class="launch-guide">
+                <p class="launch-main">Nhấn F11 để bắt đầu làm bài ở chế độ toàn màn hình.</p>
+                <p class="launch-sub">Nhấn F11 lần nữa để thoát toàn màn hình nếu cần.</p>
+                <p class="launch-sub">Nếu bàn phím của bạn không có F11 hoặc bạn không muốn dùng toàn màn hình, hãy bấm nút bên dưới để làm bài ở giao diện thường.</p>
+            </div>
+            <ul class="launch-notes">
+                <li>Kiểm tra kết nối âm thanh trước khi bắt đầu (ưu tiên tai nghe, có thể dùng loa nếu cần).</li>
+                <li>Không tải lại trang trong khi làm bài để tránh mất tiến trình.</li>
+                <li>Giữ môi trường yên tĩnh để nghe rõ từng phần.</li>
+            </ul>
+            <div class="launch-row">
+                <button id="startNormalBtn" class="launch-btn" type="button">Tôi không có nút F11 trên bàn phím</button>
+            </div>
+            <div class="launch-foot">Khuyến nghị dùng F11 để có trải nghiệm giống ứng dụng nhất.</div>
+        </div>
+    </section>
+    <div id="app">
+    <div class="header">
+        <div class="timer-container">
+            <span class="timer-display">40 minutes remaining</span>
+            <div class="timer-controls">
+                <button id="timer-toggle-btn" title="Pause/Resume Timer">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>
+                </button>
+                <button id="timer-reset-btn" title="Reset Timer">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="https://www.facebook.com/englishresourcehub" target="_blank" rel="noopener" class="header-ad">
+                <div class="ad-copy">
+                    <p class="ad-eyebrow">Study boost</p>
+                    <div class="ad-marquee">
+                        <div class="ad-loop">
+                            <span class="ad-headline">Master every IELTS tip and strategy in just 3 to 7 intensive sessions and full EXAM MATERIALS!</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <button class="ad-close" type="button" aria-label="Close ad" title="Close" onclick="window.open('https://www.facebook.com/englishresourcehub','_blank','noopener')">×</button>
+        </div>
+    </div>
+
+    <div class="audio-bar">
+        <div class="audio-controls">
+            <button id="audio-play-pause" type="button" aria-label="Play or pause audio">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>
+            </button>
+            <input type="range" id="audio-progress" min="0" value="0" step="0.01">
+            <span class="audio-time"><span id="audio-current">0:00</span> / <span id="audio-duration">0:00</span></span>
+        </div>
+        <div class="audio-meta">
+            <button class="script-toggle-btn hidden" id="scriptToggleBtn" type="button" onclick="toggleScriptPanel()">Audio Script</button>
+            <div class="audio-speed">
+                <button id="audio-speed-btn" type="button" aria-haspopup="true" aria-expanded="false">1.0x</button>
+                <div id="audio-speed-options" class="hidden" role="menu">
+                    <div class="audio-speed-option" data-speed="0.75" role="menuitem">0.75x</div>
+                    <div class="audio-speed-option" data-speed="1" role="menuitem">1.0x</div>
+                    <div class="audio-speed-option" data-speed="1.25" role="menuitem">1.25x</div>
+                    <div class="audio-speed-option" data-speed="1.5" role="menuitem">1.5x</div>
+                </div>
+            </div>
+        </div>
+        <!-- Cập nhật tên file audio Test 2 tại đây -->
+        <audio id="audio-player" src="V9-audio2.mp3" preload="metadata"></audio>
+    </div>
+
+        <div class="main-container" id="main-container">
+            <div class="student-form-container">
+                <h3>Thông tin học sinh (Bắt buộc khi nộp bài)</h3>
+                <div class="student-inputs">
+                    <input type="text" id="studentName" class="student-input-field" placeholder="Họ và tên học sinh" required>
+                    <input type="text" id="studentClass" class="student-input-field" placeholder="Lớp" required>
+                </div>
+            </div>
+
+            <div id="passage-header-container" style="width:100%;">
+                <div id="part-header-1" class="part-header">
+                    <p><strong>Part 1</strong></p>
+                    <p>Listen to the recording and answer questions 1-10.</p>
+                </div>
+                <div id="part-header-2" class="part-header hidden">
+                    <p><strong>Part 2</strong></p>
+                    <p>Listen to the recording and answer questions 11-20.</p>
+                </div>
+                <div id="part-header-3" class="part-header hidden">
+                    <p><strong>Part 3</strong></p>
+                    <p>Listen to the recording and answer questions 21-30.</p>
+                </div>
+                <div id="part-header-4" class="part-header hidden">
+                    <p><strong>Part 4</strong></p>
+                    <p>Listen to the recording and answer questions 31-40.</p>
+                </div>
+            </div>
+            
+            <div class="panels-container">
+                <div class="questions-panel" id="questions-panel">
+                    
+                    <!-- SECTION 1 -->
+                    <div id="questions-1" class="question-set">
+                        <div class="questions-container">
+                            <div class="question" data-q-start="1" data-q-end="5">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 1–5</strong></p>
+                                    <p>Complete the notes below.</p>
+                                    <p>Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+                                    <div class="question-title">Poppy Reserve</div>
+                                </div>
+                                <p>Almond Valley Poppy Reserve is a nature reserve</p>
+                                <p>• The poppies will be at their best at the end of the 1 <input type="text" class="answer-input" id="q1" placeholder="1" oninput="trackAnswer(1)"><span id="ans-tag-1"></span></p>
+                                <div class="explanation-inline" id="exp-1" onclick="highlightEvidence('month')"></div>
+                                
+                                <p>• The poppies on the hills are 2 <input type="text" class="answer-input" id="q2" placeholder="2" oninput="trackAnswer(2)"><span id="ans-tag-2"></span> in colour.</p>
+                                <div class="explanation-inline" id="exp-2" onclick="highlightEvidence('orange')"></div>
+                                
+                                <p>The reserve is located to the 3 <input type="text" class="answer-input" id="q3" placeholder="3" oninput="trackAnswer(3)"><span id="ans-tag-3"></span> of Lakeside.</p>
+                                <div class="explanation-inline" id="exp-3" onclick="highlightEvidence('east')"></div>
+                                
+                                <p>• The best time for photography is mid-afternoon.</p>
+                                <p>• Wear 4 <input type="text" class="answer-input" id="q4" placeholder="4" oninput="trackAnswer(4)"><span id="ans-tag-4"></span> because of rattlesnakes.</p>
+                                <div class="explanation-inline" id="exp-4" onclick="highlightEvidence('trousers')"></div>
+                                
+                                <p>• The reserve is a 5 <input type="text" class="answer-input" id="q5" placeholder="5" oninput="trackAnswer(5)"><span id="ans-tag-5"></span> park.</p>
+                                <div class="explanation-inline" id="exp-5" onclick="highlightEvidence('state')"></div>
+                            </div>
+
+                            <div class="question" data-q-start="6" data-q-end="10">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 6–10</strong></p>
+                                    <p>Complete the table below.</p>
+                                    <p>Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+                                    <div class="question-title">Tour</div>
+                                </div>
+                                
+                                <table style="width:100%; border-collapse: collapse; margin-bottom: 20px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Tour</th>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Start time</th>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Duration</th>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Highlights</th>
+                                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f1f2ec; text-align: left;">Photography</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">The 6 <input type="text" class="answer-input" id="q6" placeholder="6" oninput="trackAnswer(6)" style="width: 100px;"><span id="ans-tag-6"></span> tour</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Every hour from 7:30 a.m.</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">30 minutes</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Viewpoints, film and the 7 <input type="text" class="answer-input" id="q7" placeholder="7" oninput="trackAnswer(7)" style="width: 100px;"><span id="ans-tag-7"></span></td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Panoramic pictures</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">The wildflower tour</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Every two hours from 8:00 a.m.</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">8 <input type="text" class="answer-input" id="q8" placeholder="8" oninput="trackAnswer(8)" style="width: 80px;"><span id="ans-tag-8"></span></td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Poppy, cream cup, and stage</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Close-up tips</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">The wildlife tour</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">9 <input type="text" class="answer-input" id="q9" placeholder="9" oninput="trackAnswer(9)" style="width: 80px;"><span id="ans-tag-9"></span> a.m. or 7:00 p.m.</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">1.5 hours</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Coyote, quail, roadrunners</td>
+                                            <td style="border: 1px solid #ccc; padding: 10px;">Bring tripod and a 10 <input type="text" class="answer-input" id="q10" placeholder="10" oninput="trackAnswer(10)" style="width: 80px;"><span id="ans-tag-10"></span> lens</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="explanation-inline" id="exp-6" onclick="highlightEvidence('general')"></div>
+                                <div class="explanation-inline" id="exp-7" onclick="highlightEvidence('museum')"></div>
+                                <div class="explanation-inline" id="exp-8" onclick="highlightEvidence('one hour')"></div>
+                                <div class="explanation-inline" id="exp-9" onclick="highlightEvidence('5.30')"></div>
+                                <div class="explanation-inline" id="exp-10" onclick="highlightEvidence('zoom')"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2 -->
+                    <div id="questions-2" class="question-set hidden">
+                        <div class="questions-container">
+                            <div class="question" data-q-start="11" data-q-end="15">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 11–15</strong></p>
+                                    <p>Choose the correct answer, <strong>A, B or C</strong>.</p>
+                                    <div class="question-title">Re-creating life in an Iron Age village</div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="11" data-q-end="11" id="q11-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="11">11</span><span class="mcq-question-title">Jim says that in the Iron Age village</span><span id="ans-tag-11"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q11" value="A" onchange="trackAnswer(11)"> A. he is sometimes cold at night.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q11" value="B" onchange="trackAnswer(11)"> B. he always gets up early.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q11" value="C" onchange="trackAnswer(11)"> C. he has time to himself.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-11" onclick="highlightEvidence('get up early')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="12" data-q-end="12" id="q12-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="12">12</span><span class="mcq-question-title">What does Jim say about the food they eat in the village?</span><span id="ans-tag-12"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q12" value="A" onchange="trackAnswer(12)"> A. It takes time to prepare.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q12" value="B" onchange="trackAnswer(12)"> B. It is difficult to get used to.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q12" value="C" onchange="trackAnswer(12)"> C. It has to be eaten quickly.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-12" onclick="highlightEvidence('takes such a long time')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="13" data-q-end="13" id="q13-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="13">13</span><span class="mcq-question-title">Jim says that at the evening meal</span><span id="ans-tag-13"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q13" value="A" onchange="trackAnswer(13)"> A. they are sometimes too tired to eat.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q13" value="B" onchange="trackAnswer(13)"> B. they mainly have fruit and berries.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q13" value="C" onchange="trackAnswer(13)"> C. they talk about what they've done.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-13" onclick="highlightEvidence('chat about the day')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="14" data-q-end="14" id="q14-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="14">14</span><span class="mcq-question-title">The most important job for the blacksmiths is</span><span id="ans-tag-14"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q14" value="A" onchange="trackAnswer(14)"> A. to mend broken tools and implements.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q14" value="B" onchange="trackAnswer(14)"> B. to maintain a good source of heat.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q14" value="C" onchange="trackAnswer(14)"> C. to collect sufficient firewood.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-14" onclick="highlightEvidence('tend the fire and to get it nice and hot')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="15" data-q-end="15" id="q15-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="15">15</span><span class="mcq-question-title">Jim likes the fact that in the village, people</span><span id="ans-tag-15"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q15" value="A" onchange="trackAnswer(15)"> A. do varied activities.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q15" value="B" onchange="trackAnswer(15)"> B. share their knowledge.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q15" value="C" onchange="trackAnswer(15)"> C. get a lot of exercise.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-15" onclick="highlightEvidence('how to do different things every day')"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="question" data-q-start="16" data-q-end="20">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 16–20</strong></p>
+                                    <p>Complete the flow-chart below.</p>
+                                    <p>Choose <strong>FIVE</strong> correct answers from the box, A-I, next to questions 16-20.</p>
+                                    <div class="question-title">MAKING AN IRON AGE ROUNDHOUSE</div>
+                                </div>
+
+                                <div class="example-box" style="font-size: 15px; margin-bottom: 20px;">
+                                    <ul class="options-list" style="list-style-type: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                                        <li><strong>A</strong> bone</li>
+                                        <li><strong>B</strong> different</li>
+                                        <li><strong>C</strong> equal</li>
+                                        <li><strong>D</strong> elm</li>
+                                        <li><strong>E</strong> hazel</li>
+                                        <li><strong>F</strong> iron</li>
+                                        <li><strong>G</strong> peg</li>
+                                        <li><strong>H</strong> roof</li>
+                                        <li><strong>I</strong> scaffold</li>
+                                    </ul>
+                                </div>
+
+                                <div class="flow-chart">
+                                    <div class="flow-box">Mark centre of planned house with a 16 <select class="answer-input" id="q16" onchange="trackAnswer(16)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select><span id="ans-tag-16"></span></div>
+                                    <div class="explanation-inline" id="exp-16" onclick="highlightEvidence('wooden peg')"></div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Mark out circle for outer boundary</div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Dig ground using tools made from 17 <select class="answer-input" id="q17" onchange="trackAnswer(17)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select><span id="ans-tag-17"></span></div>
+                                    <div class="explanation-inline" id="exp-17" onclick="highlightEvidence('animal bone')"></div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Insert wall posts (Iron Age builders preferred wood from oak trees)</div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Slot more stakes into upright posts</div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Insert centre post and build a wooden 18 <select class="answer-input" id="q18" onchange="trackAnswer(18)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select><span id="ans-tag-18"></span> around it</div>
+                                    <div class="explanation-inline" id="exp-18" onclick="highlightEvidence('scaffold tower')"></div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Add main supporting beams and ring beams</div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Complete roof framework using 19 <select class="answer-input" id="q19" onchange="trackAnswer(19)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select><span id="ans-tag-19"></span> wood rods</div>
+                                    <div class="explanation-inline" id="exp-19" onclick="highlightEvidence('hazel wood rods')"></div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Cover roof with reed bundles of 20 <select class="answer-input" id="q20" onchange="trackAnswer(20)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option></select><span id="ans-tag-20"></span> lengths</div>
+                                    <div class="explanation-inline" id="exp-20" onclick="highlightEvidence('equal length')"></div>
+                                    <div class="flow-arrow">↓</div>
+                                    
+                                    <div class="flow-box">Daub with mixture of clay, dung and straw</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3 -->
+                    <div id="questions-3" class="question-set hidden">
+                        <div class="questions-container">
+                            <div class="question" data-q-start="21" data-q-end="24">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 21–24</strong></p>
+                                    <p>Choose the correct answer, <strong>A, B or C</strong>.</p>
+                                    <div class="question-title">Presentation on how jobs might change in the future</div>
+                                </div>
+                                
+                                <div class="multi-choice-question" data-q-start="21" data-q-end="21" id="q21-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="21">21</span><span class="mcq-question-title">What do the students find surprising about the way that complaints were dealt with at the call centre?</span><span id="ans-tag-21"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q21" value="A" onchange="trackAnswer(21)"> A. the way that customers responded to it</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q21" value="B" onchange="trackAnswer(21)"> B. the employees's lack of enthusiasm for it</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q21" value="C" onchange="trackAnswer(21)"> C. the kind of questions employees were obliged to ask</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-21" onclick="highlightEvidence('customers were happier')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="22" data-q-end="22" id="q22-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="22">22</span><span class="mcq-question-title">What does Emma say about the report by Jerry Kaplan?</span><span id="ans-tag-22"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q22" value="A" onchange="trackAnswer(22)"> A. It shows how machines will respond to human needs.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q22" value="B" onchange="trackAnswer(22)"> B. It emphasises the variety of roles that machines will have.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q22" value="C" onchange="trackAnswer(22)"> C. It explains the limitations of machines.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-22" onclick="highlightEvidence('human can empathise, but a machine can\\'t')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="23" data-q-end="23" id="q23-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="23">23</span><span class="mcq-question-title">What is Nick's reaction to the article The Human Cloud?</span><span id="ans-tag-23"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q23" value="A" onchange="trackAnswer(23)"> A. He agrees that companies should focus on making savings.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q23" value="B" onchange="trackAnswer(23)"> B. He supports the concept of greater flexibility for employees.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q23" value="C" onchange="trackAnswer(23)"> C. He approves of businesses spending more on recruiting experts.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-23" onclick="highlightEvidence('love the idea of working from home in a time that suits')"></div>
+                                </div>
+
+                                <div class="multi-choice-question" data-q-start="24" data-q-end="24" id="q24-container">
+                                    <div class="multi-choice-options">
+                                        <p class="mcq-question-text"><span class="mcq-question-number question-number-box" data-q-number="24">24</span><span class="mcq-question-title">What do the students agree about the use of technology to collect information about employees?</span><span id="ans-tag-24"></span></p>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q24" value="A" onchange="trackAnswer(24)"> A. Cameras are an effective means of maintaining security.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q24" value="B" onchange="trackAnswer(24)"> B. Sometimes productivity is more important than individual privacy.</label></div>
+                                        <div class="multi-choice-option"><label><input type="radio" name="q24" value="C" onchange="trackAnswer(24)"> C. Employees may object to certain types of monitoring.</label></div>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-24" onclick="highlightEvidence('affects people\\'s personal privacy')"></div>
+                                </div>
+                            </div>
+
+                            <div class="question" data-q-start="25" data-q-end="30">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 25–30</strong></p>
+                                    <p>What issue do Emma and Nick discuss for each aspect of the presentation?</p>
+                                    <p>Choose SIX correct answers, <strong>A-H</strong>, next to questions 25-30.</p>
+                                </div>
+                                
+                                <div class="example-box" style="font-size: 15px; margin-bottom: 20px;">
+                                    <ul class="options-list" style="list-style-type: none; display: grid; grid-template-columns: 1fr; gap: 8px;">
+                                        <li><strong>A</strong> at which point of the presentation it should come</li>
+                                        <li><strong>B</strong> whether it should be removed completely</li>
+                                        <li><strong>C</strong> whether it is clear enough</li>
+                                        <li><strong>D</strong> if it needs to be completely re-written</li>
+                                        <li><strong>E</strong> if visuals will help or not</li>
+                                        <li><strong>F</strong> if the information needs to be checked</li>
+                                        <li><strong>G</strong> which further examples should be included</li>
+                                        <li><strong>H</strong> which of them will present it</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="question-title">Aspects of the presentation</div>
+                                <div class="matching-form-container">
+                                    <div class="matching-form-row">
+                                        <label for="q25" class="matching-form-label"><strong>25. Introduction</strong></label>
+                                        <select class="answer-input" id="q25" onchange="trackAnswer(25)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span id="ans-tag-25"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-25" onclick="highlightEvidence('present it')"></div>
+
+                                    <div class="matching-form-row">
+                                        <label for="q26" class="matching-form-label"><strong>26. Researcher profiles</strong></label>
+                                        <select class="answer-input" id="q26" onchange="trackAnswer(26)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span id="ans-tag-26"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-26" onclick="highlightEvidence('cut it')"></div>
+
+                                    <div class="matching-form-row">
+                                        <label for="q27" class="matching-form-label"><strong>27. Section on automation</strong></label>
+                                        <select class="answer-input" id="q27" onchange="trackAnswer(27)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span id="ans-tag-27"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-27" onclick="highlightEvidence('start again')"></div>
+
+                                    <div class="matching-form-row">
+                                        <label for="q28" class="matching-form-label"><strong>28. Section on workplace structure</strong></label>
+                                        <select class="answer-input" id="q28" onchange="trackAnswer(28)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span id="ans-tag-28"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-28" onclick="highlightEvidence('other situations')"></div>
+                                    
+                                    <div class="matching-form-row">
+                                        <label for="q29" class="matching-form-label"><strong>29. Section on tracking technology</strong></label>
+                                        <select class="answer-input" id="q29" onchange="trackAnswer(29)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span id="ans-tag-29"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-29" onclick="highlightEvidence('serve any real purpose')"></div>
+                                    
+                                    <div class="matching-form-row">
+                                        <label for="q30" class="matching-form-label"><strong>30. Interview with company manager</strong></label>
+                                        <select class="answer-input" id="q30" onchange="trackAnswer(30)"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><span id="ans-tag-30"></span>
+                                    </div>
+                                    <div class="explanation-inline" id="exp-30" onclick="highlightEvidence('confirm whether or not it\\'s correct')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4 -->
+                    <div id="questions-4" class="question-set hidden">
+                        <div class="questions-container">
+                            <div class="question" data-q-start="31" data-q-end="40">
+                                <div class="question-prompt">
+                                    <p><strong>Questions 31-40</strong></p>
+                                    <p>Complete the notes below.</p>
+                                    <p>Write <strong>NO MORE THAN THREE WORDS</strong> for each answer.</p>
+                                    <div class="question-title">HEALTH ON THE NIGHT SHIFT</div>
+                                </div>
+                                
+                                <p><strong>Background:</strong></p>
+                                <p>• increase in 31 <input type="text" class="answer-input" id="q31" placeholder="31" oninput="trackAnswer(31)"><span id="ans-tag-31"></span> night workers because of 24-hour shopping/services</p>
+                                <div class="explanation-inline" id="exp-31" onclick="highlightEvidence('the number of')"></div>
+                                <p>• need to examine effects of changing work and sleep habits US and British research found these lead to health problems</p>
+                                
+                                <br>
+                                <p><strong>Main Causes:</strong></p>
+                                <p>A. 32 <input type="text" class="answer-input" id="q32" placeholder="32" oninput="trackAnswer(32)"><span id="ans-tag-32"></span></p>
+                                <div class="explanation-inline" id="exp-32" onclick="highlightEvidence('internal clock')"></div>
+                                <p>• regulates daily life</p>
+                                <p>• connected to behavioural patterns and cycles of 33 <input type="text" class="answer-input" id="q33" placeholder="33" oninput="trackAnswer(33)"><span id="ans-tag-33"></span></p>
+                                <div class="explanation-inline" id="exp-33" onclick="highlightEvidence('light and dark')"></div>
+                                <p>• programmes us to be awake and asleep at certain times</p>
+                                <br>
+                                <p>B. Sleep Debt</p>
+                                <p>• impossible to get enough sleep during daytime</p>
+                                <br>
+                                <p>C. 34 <input type="text" class="answer-input" id="q34" placeholder="34" oninput="trackAnswer(34)"><span id="ans-tag-34"></span></p>
+                                <div class="explanation-inline" id="exp-34" onclick="highlightEvidence('unsocial hours')"></div>
+                                <p>• different working/sleeping times, 'dislocation'</p>
+                                
+                                <br>
+                                <p><strong>Effects:</strong></p>
+                                <p>A. Physical</p>
+                                <p>• higher incidence of heart and 35 <input type="text" class="answer-input" id="q35" placeholder="35" oninput="trackAnswer(35)"><span id="ans-tag-35"></span> problems</p>
+                                <div class="explanation-inline" id="exp-35" onclick="highlightEvidence('stomach')"></div>
+                                <p>• more minor illnesses, suggesting that immunity of shift workers is affected</p>
+                                <br>
+                                <p>B. Psychological</p>
+                                <p>• most common: 36 <input type="text" class="answer-input" id="q36" placeholder="36" oninput="trackAnswer(36)"><span id="ans-tag-36"></span></p>
+                                <div class="explanation-inline" id="exp-36" onclick="highlightEvidence('depression')"></div>
+                                <p>• 37 <input type="text" class="answer-input" id="q37" placeholder="37" oninput="trackAnswer(37)"><span id="ans-tag-37"></span> affected, e.g. decision-making, planning, which regulate our 38 <input type="text" class="answer-input" id="q38" placeholder="38" oninput="trackAnswer(38)"><span id="ans-tag-38"></span></p>
+                                <div class="explanation-inline" id="exp-37" onclick="highlightEvidence('mental abilities')"></div>
+                                <div class="explanation-inline" id="exp-38" onclick="highlightEvidence('performance')"></div>
+                                <br>
+                                <p>C. Social</p>
+                                <p>Night shift work can lead to:</p>
+                                <p>• destruction of 39 <input type="text" class="answer-input" id="q39" placeholder="39" oninput="trackAnswer(39)"><span id="ans-tag-39"></span> and other relationships, e.g. 40 <input type="text" class="answer-input" id="q40" placeholder="40" oninput="trackAnswer(40)"><span id="ans-tag-40"></span></p>
+                                <div class="explanation-inline" id="exp-39" onclick="highlightEvidence('family life')"></div>
+                                <div class="explanation-inline" id="exp-40" onclick="highlightEvidence('peer group')"></div>
+                                <p>• eventually, for individuals: social isolation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- AUDIO SCRIPT PANEL -->
+                <div class="script-panel" id="scriptPanel">
+                    <div class="script-header">
+                        <h3>Audio Script & Evidence</h3>
+                        <button type="button" onclick="toggleScriptPanel()" style="background:none;border:none;font-size:18px;cursor:pointer;">&times;</button>
+                    </div>
+                    <div class="script-content" id="scriptContentContainer">
+                        <div id="script-1">
+                            <p><strong>Section 1:</strong></p>
+                            <p>WOMAN: <span id="ev-month">they should peak and be in full bloom at the end of the month.</span></p>
+                            <p>MAN: <span id="ev-orange">The hills are already covered with orange poppies.</span></p>
+                            <p>MAN: <span id="ev-east">From Lakeside, you'll need to drive about an hour east.</span></p>
+                            <p>MAN: <span id="ev-trousers">we do recommend wearing trousers just to be on the safe side.</span></p>
+                            <p>MAN: <span id="ev-state">since it is a state park, not a national park.</span></p>
+                            <p>MAN: <span id="ev-general">Starting at 7.30 a.m. is our general tour.</span></p>
+                            <p>MAN: <span id="ev-museum">along with a film introducing the park and the museum.</span></p>
+                            <p>MAN: <span id="ev-one hour">we have a wonderful wildflower tour every two hours from 8 a.m. It lasts one hour</span></p>
+                            <p>MAN: <span id="ev-5.30">so we offer this tour only two times, 5.30 a.m. or 7 p.m.</span></p>
+                            <p>MAN: <span id="ev-zoom">so we recommend bringing a tripod and zoom lens if you want to take pictures.</span></p>
+                        </div>
+                        <div id="script-2" style="margin-top:20px;">
+                            <p><strong>Section 2:</strong></p>
+                            <p>JIM: <span id="ev-get up early">But here I do it every day because it's so light. Others also get up early because they find the straw beds rather cold.</span></p>
+                            <p>JIM: <span id="ev-takes such a long time">As it takes such a long time to cook anything, we end up eating only twice a day.</span></p>
+                            <p>JIM: <span id="ev-chat about the day">Although the evening meal provides a chance for us to chat about the day, it can be quite chilly so we go to bed pretty early.</span></p>
+                            <p>JIM: <span id="ev-tend the fire and to get it nice and hot">The biggest priority for the blacksmiths working the forge is to tend the fire and to get it nice and hot so they can carry out their tasks.</span></p>
+                            <p>JIM: <span id="ev-how to do different things every day">Here you're finding out how to do different things every day, which keeps you on your toes and keeps you interested.</span></p>
+                            <p>JIM: <span id="ev-wooden peg">You mark the centre of your house with a wooden peg.</span></p>
+                            <p>JIM: <span id="ev-animal bone">used tools which they fashioned from animal bone.</span></p>
+                            <p>JIM: <span id="ev-scaffold tower">so the next thing you have to do is build around the post a timber scaffold tower</span></p>
+                            <p>JIM: <span id="ev-hazel wood rods">Rather like weaving a basket using rods from the willow tree, hazel wood rods are linked to the beams in parallel hoops.</span></p>
+                            <p>JIM: <span id="ev-equal length">First you take reed bundles and cut them so that each is of equal length.</span></p>
+                        </div>
+                        <div id="script-3" style="margin-top:20px;">
+                            <p><strong>Section 3:</strong></p>
+                            <p>NICK: <span id="ev-customers were happier">But apparently it worked. Customers were happier with the new methods.</span></p>
+                            <p>EMMA: <span id="ev-human can empathise, but a machine can't">I suppose it's something to do with the fact that a human can empathise, but a machine can't.</span></p>
+                            <p>NICK: <span id="ev-love the idea of working from home in a time that suits">On the other hand, I love the idea of working from home in a time that suits. It's certainly controversial.</span></p>
+                            <p>EMMA: <span id="ev-affects people's personal privacy">When we talk about this, I want to make clear how this affects people's personal privacy.</span></p>
+                            <p>EMMA: <span id="ev-present it">But don't you think you ought to deliver it rather than me? It's mainly your work. NICK: OK, so let's do it that way then.</span></p>
+                            <p>EMMA: <span id="ev-cut it">So, cut it? NICK: Let's rehearse the whole presentation and see if it's necessary.</span></p>
+                            <p>EMMA: <span id="ev-start again">I'm thinking I haven't really given equal attention to the pros and cons. I should start again.</span></p>
+                            <p>EMMA: <span id="ev-other situations">We're only using one particular company as a case study. We need to source some other situations as supporting material.</span></p>
+                            <p>NICK: <span id="ev-serve any real purpose">There's no point using images just for decoration. We need to think about whether they'd serve any real purpose.</span></p>
+                            <p>NICK: <span id="ev-confirm whether or not it's correct">Maybe I should type up that section and send it to her. So she can confirm whether or not it's correct.</span></p>
+                        </div>
+                        <div id="script-4" style="margin-top:20px;">
+                            <p><strong>Section 4:</strong></p>
+                            <p>SPEAKER: <span id="ev-the number of">there has been a huge increase in the number of workers doing regular night shifts in recent years</span></p>
+                            <p>SPEAKER: <span id="ev-internal clock">The first one is what they call the internal clock.</span></p>
+                            <p>SPEAKER: <span id="ev-light and dark">this clock is linked to not just our behavioural habits, but to cycles of light and dark.</span></p>
+                            <p>SPEAKER: <span id="ev-unsocial hours">The third cause of these problems is the unsocial hours that night workers have to keep.</span></p>
+                            <p>SPEAKER: <span id="ev-stomach">In addition, there seems to be a very high incidence of stomach problems, for example, ulcers</span></p>
+                            <p>SPEAKER: <span id="ev-depression">And the most common problem is depression.</span></p>
+                            <p>SPEAKER: <span id="ev-mental abilities">there is a lot of evidence from accident statistics to suggest that mental abilities are badly affected</span></p>
+                            <p>SPEAKER: <span id="ev-performance">And these are what control our performance.</span></p>
+                            <p>SPEAKER: <span id="ev-family life">The first one is obviously the breakup of family life</span></p>
+                            <p>SPEAKER: <span id="ev-peer group">But there's also the breakdown of other relationships, not just within the family, but among the peer group.</span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <button class="nav-arrow" onclick="previousQuestion()" id="prevBtn">‹</button>
+        <button class="nav-arrow" onclick="nextQuestion()" id="nextBtn">›</button>
+    </div>
+
+    <nav class="nav-row perScorableItem" aria-label="Questions">
+        <div class="footer__questionWrapper___1tZ46 multiple selected" role="tablist">
+            <button role="tab" class="footer__questionNo___3WNct" onclick="switchToPart(1)">
+                <span>
+                    <span aria-hidden="true" class="section-prefix">Part </span>
+                    <span class="sectionNr" aria-hidden="true">1</span>
+                    <span class="attemptedCount" aria-hidden="true">0 of 10</span>
+                </span>
+            </button>
+            <div class="footer__subquestionWrapper___9GgoP">
+                <button class="subQuestion scorable-item" id="sub-btn-1" onclick="goToQuestion(1)"><span class="sr-only">Question 1</span><span aria-hidden="true">1</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-2" onclick="goToQuestion(2)"><span class="sr-only">Question 2</span><span aria-hidden="true">2</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-3" onclick="goToQuestion(3)"><span class="sr-only">Question 3</span><span aria-hidden="true">3</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-4" onclick="goToQuestion(4)"><span class="sr-only">Question 4</span><span aria-hidden="true">4</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-5" onclick="goToQuestion(5)"><span class="sr-only">Question 5</span><span aria-hidden="true">5</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-6" onclick="goToQuestion(6)"><span class="sr-only">Question 6</span><span aria-hidden="true">6</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-7" onclick="goToQuestion(7)"><span class="sr-only">Question 7</span><span aria-hidden="true">7</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-8" onclick="goToQuestion(8)"><span class="sr-only">Question 8</span><span aria-hidden="true">8</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-9" onclick="goToQuestion(9)"><span class="sr-only">Question 9</span><span aria-hidden="true">9</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-10" onclick="goToQuestion(10)"><span class="sr-only">Question 10</span><span aria-hidden="true">10</span></button>
+            </div>
+        </div>
+        <div class="footer__questionWrapper___1tZ46 multiple" role="tablist">
+            <button role="tab" class="footer__questionNo___3WNct" onclick="switchToPart(2)">
+                <span>
+                    <span aria-hidden="true" class="section-prefix">Part </span>
+                    <span class="sectionNr" aria-hidden="true">2</span>
+                    <span class="attemptedCount" aria-hidden="true">0 of 10</span>
+                </span>
+            </button>
+            <div class="footer__subquestionWrapper___9GgoP">
+                <button class="subQuestion scorable-item" id="sub-btn-11" onclick="goToQuestion(11)"><span class="sr-only">Question 11</span><span aria-hidden="true">11</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-12" onclick="goToQuestion(12)"><span class="sr-only">Question 12</span><span aria-hidden="true">12</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-13" onclick="goToQuestion(13)"><span class="sr-only">Question 13</span><span aria-hidden="true">13</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-14" onclick="goToQuestion(14)"><span class="sr-only">Question 14</span><span aria-hidden="true">14</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-15" onclick="goToQuestion(15)"><span class="sr-only">Question 15</span><span aria-hidden="true">15</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-16" onclick="goToQuestion(16)"><span class="sr-only">Question 16</span><span aria-hidden="true">16</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-17" onclick="goToQuestion(17)"><span class="sr-only">Question 17</span><span aria-hidden="true">17</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-18" onclick="goToQuestion(18)"><span class="sr-only">Question 18</span><span aria-hidden="true">18</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-19" onclick="goToQuestion(19)"><span class="sr-only">Question 19</span><span aria-hidden="true">19</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-20" onclick="goToQuestion(20)"><span class="sr-only">Question 20</span><span aria-hidden="true">20</span></button>
+            </div>
+        </div>
+        <div class="footer__questionWrapper___1tZ46 multiple" role="tablist">
+            <button role="tab" class="footer__questionNo___3WNct" onclick="switchToPart(3)">
+                <span>
+                    <span aria-hidden="true" class="section-prefix">Part </span>
+                    <span class="sectionNr" aria-hidden="true">3</span>
+                    <span class="attemptedCount" aria-hidden="true">0 of 10</span>
+                </span>
+            </button>
+            <div class="footer__subquestionWrapper___9GgoP">
+                <button class="subQuestion scorable-item" id="sub-btn-21" onclick="goToQuestion(21)"><span class="sr-only">Question 21</span><span aria-hidden="true">21</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-22" onclick="goToQuestion(22)"><span class="sr-only">Question 22</span><span aria-hidden="true">22</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-23" onclick="goToQuestion(23)"><span class="sr-only">Question 23</span><span aria-hidden="true">23</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-24" onclick="goToQuestion(24)"><span class="sr-only">Question 24</span><span aria-hidden="true">24</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-25" onclick="goToQuestion(25)"><span class="sr-only">Question 25</span><span aria-hidden="true">25</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-26" onclick="goToQuestion(26)"><span class="sr-only">Question 26</span><span aria-hidden="true">26</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-27" onclick="goToQuestion(27)"><span class="sr-only">Question 27</span><span aria-hidden="true">27</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-28" onclick="goToQuestion(28)"><span class="sr-only">Question 28</span><span aria-hidden="true">28</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-29" onclick="goToQuestion(29)"><span class="sr-only">Question 29</span><span aria-hidden="true">29</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-30" onclick="goToQuestion(30)"><span class="sr-only">Question 30</span><span aria-hidden="true">30</span></button>
+            </div>
+        </div>
+        <div class="footer__questionWrapper___1tZ46 multiple" role="tablist">
+            <button role="tab" class="footer__questionNo___3WNct" onclick="switchToPart(4)">
+                <span>
+                    <span aria-hidden="true" class="section-prefix">Part </span>
+                    <span class="sectionNr" aria-hidden="true">4</span>
+                    <span class="attemptedCount" aria-hidden="true">0 of 10</span>
+                </span>
+            </button>
+            <div class="footer__subquestionWrapper___9GgoP">
+                <button class="subQuestion scorable-item" id="sub-btn-31" onclick="goToQuestion(31)"><span class="sr-only">Question 31</span><span aria-hidden="true">31</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-32" onclick="goToQuestion(32)"><span class="sr-only">Question 32</span><span aria-hidden="true">32</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-33" onclick="goToQuestion(33)"><span class="sr-only">Question 33</span><span aria-hidden="true">33</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-34" onclick="goToQuestion(34)"><span class="sr-only">Question 34</span><span aria-hidden="true">34</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-35" onclick="goToQuestion(35)"><span class="sr-only">Question 35</span><span aria-hidden="true">35</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-36" onclick="goToQuestion(36)"><span class="sr-only">Question 36</span><span aria-hidden="true">36</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-37" onclick="goToQuestion(37)"><span class="sr-only">Question 37</span><span aria-hidden="true">37</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-38" onclick="goToQuestion(38)"><span class="sr-only">Question 38</span><span aria-hidden="true">38</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-39" onclick="goToQuestion(39)"><span class="sr-only">Question 39</span><span aria-hidden="true">39</span></button>
+                <button class="subQuestion scorable-item" id="sub-btn-40" onclick="goToQuestion(40)"><span class="sr-only">Question 40</span><span aria-hidden="true">40</span></button>
+            </div>
+        </div>
+        <button id="deliver-button" aria-label="Review your answers" class="footer__deliverButton___3FM07">
+            <i class="fa fa-check" aria-hidden="true"></i>
+            <span>Check Answers</span>
+        </button>
+    </nav>
+
+    <div id="contextMenu" class="context-menu">
+        <div id="menu-highlight" class="context-menu-item" onclick="highlightText()">
+            Highlight (Yellow)
+        </div>
+    </div>
+
+    <div id="results-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeResultsModal()">&times;</button>
+            <h2>Results</h2>
+            <div id="submit-status" style="display: none; text-align: center; margin-bottom: 15px; padding: 10px; border-radius: 4px; font-weight: bold;"></div>
+            <div class="results-summary">
+                <p>Score: <span id="results-score"></span> / 40</p>
+                <p>IELTS Band: <span id="results-band"></span></p>
+            </div>
+            <div id="results-details" class="results-details-container"></div>
+        </div>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby7tYg_WIbxhkhK8NpoHs7s5GW3svAD56ZswWfimJgR-NMnzbbmTCBXwchyqhCI69pa/exec";
+
+        window.testMeta = {
+            "totalQuestions": 40,
+            "parts": [
+                {"part": 1, "start": 1, "end": 10},
+                {"part": 2, "start": 11, "end": 20},
+                {"part": 3, "start": 21, "end": 30},
+                {"part": 4, "start": 31, "end": 40}
+            ],
+            "correctAnswers": {
+                "1": "month", 
+                "2": "orange", 
+                "3": "east", 
+                "4": "trousers", 
+                "5": "state",
+                "6": "general", 
+                "7": "museum", 
+                "8": ["one hour", "1 hour"], 
+                "9": ["5.30", "5:30"], 
+                "10": "zoom",
+                "11": "B", 
+                "12": "A", 
+                "13": "C", 
+                "14": "B", 
+                "15": "A",
+                "16": "G", 
+                "17": "A", 
+                "18": "I", 
+                "19": "E", 
+                "20": "C",
+                "21": "A", 
+                "22": "C", 
+                "23": "B", 
+                "24": "C", 
+                "25": "H", 
+                "26": "B", 
+                "27": "D", 
+                "28": "G", 
+                "29": "E", 
+                "30": "F",
+                "31": "the number of", 
+                "32": ["internal clock", "the internal clock"], 
+                "33": "light and dark", 
+                "34": "unsocial hours", 
+                "35": "stomach",
+                "36": "depression", 
+                "37": "mental abilities", 
+                "38": "performance", 
+                "39": "family life", 
+                "40": "peer group"
+            }
+        };
+
+        window.testExplanations = {
+            "1": "Giải thích: Transcript: 'they should peak and be in full bloom at the end of the month.'",
+            "2": "Giải thích: Transcript: 'The hills are already covered with orange poppies.'",
+            "3": "Giải thích: Transcript: 'From Lakeside, you'll need to drive about an hour east.'",
+            "4": "Giải thích: Transcript: 'we do recommend wearing trousers just to be on the safe side.'",
+            "5": "Giải thích: Transcript: 'since it is a state park, not a national park.'",
+            "6": "Giải thích: Transcript: 'Starting at 7.30 a.m. is our general tour.'",
+            "7": "Giải thích: Transcript: 'along with a film introducing the park and the museum.'",
+            "8": "Giải thích: Transcript: 'we have a wonderful wildflower tour every two hours from 8 a.m. It lasts one hour'",
+            "9": "Giải thích: Transcript: 'so we offer this tour only two times, 5.30 a.m. or 7 p.m.'",
+            "10": "Giải thích: Transcript: 'so we recommend bringing a tripod and zoom lens if you want to take pictures.'",
+            "11": "Giải thích: Transcript: 'I occasionally did that when I was at home because I loved having time to myself... But here I do it every day because it's so light. Others also get up early...'",
+            "12": "Giải thích: Transcript: 'As it takes such a long time to cook anything, we end up eating only twice a day.'",
+            "13": "Giải thích: Transcript: 'Although the evening meal provides a chance for us to chat about the day, it can be quite chilly so we go to bed pretty early.'",
+            "14": "Giải thích: Transcript: 'The biggest priority for the blacksmiths working the forge is to tend the fire and to get it nice and hot so they can carry out their tasks.'",
+            "15": "Giải thích: Transcript: 'Here you're finding out how to do different things every day, which keeps you on your toes and keeps you interested.'",
+            "16": "Giải thích: Transcript: 'You mark the centre of your house with a wooden peg.'",
+            "17": "Giải thích: Transcript: 'used tools which they fashioned from animal bone.'",
+            "18": "Giải thích: Transcript: 'so the next thing you have to do is build around the post a timber scaffold tower'",
+            "19": "Giải thích: Transcript: 'Rather like weaving a basket using rods from the willow tree, hazel wood rods are linked to the beams in parallel hoops.'",
+            "20": "Giải thích: Transcript: 'First you take reed bundles and cut them so that each is of equal length.'",
+            "21": "Giải thích: Transcript: 'Customers were happier with the new methods.'",
+            "22": "Giải thích: Transcript: 'I suppose it's something to do with the fact that a human can empathise, but a machine can't.'",
+            "23": "Giải thích: Transcript: 'On the other hand, I love the idea of working from home in a time that suits. It's certainly controversial.'",
+            "24": "Giải thích: Transcript: 'When we talk about this, I want to make clear how this affects people's personal privacy.'",
+            "25": "Giải thích: Transcript: 'But don't you think you ought to deliver it rather than me? It's mainly your work. NICK: OK, so let's do it that way then.'",
+            "26": "Giải thích: Transcript: 'So, cut it? NICK: Let's rehearse the whole presentation and see if it's necessary.'",
+            "27": "Giải thích: Transcript: 'I'm thinking I haven't really given equal attention to the pros and cons. I should start again.'",
+            "28": "Giải thích: Transcript: 'We're only using one particular company as a case study. We need to source some other situations as supporting material.'",
+            "29": "Giải thích: Transcript: 'There's no point using images just for decoration. We need to think about whether they'd serve any real purpose.'",
+            "30": "Giải thích: Transcript: 'Maybe I should type up that section and send it to her. So she can confirm whether or not it's correct.'",
+            "31": "Giải thích: Transcript: 'there has been a huge increase in the number of workers doing regular night shifts in recent years'",
+            "32": "Giải thích: Transcript: 'The first one is what they call the internal clock.'",
+            "33": "Giải thích: Transcript: 'this clock is linked to not just our behavioural habits, but to cycles of light and dark.'",
+            "34": "Giải thích: Transcript: 'The third cause of these problems is the unsocial hours that night workers have to keep.'",
+            "35": "Giải thích: Transcript: 'In addition, there seems to be a very high incidence of stomach problems, for example, ulcers'",
+            "36": "Giải thích: Transcript: 'And the most common problem is depression.'",
+            "37": "Giải thích: Transcript: 'there is a lot of evidence from accident statistics to suggest that mental abilities are badly affected'",
+            "38": "Giải thích: Transcript: 'And these are what control our performance.'",
+            "39": "Giải thích: Transcript: 'The first one is obviously the breakup of family life'",
+            "40": "Giải thích: Transcript: 'But there's also the breakdown of other relationships, not just within the family, but among the peer group.'"
+        };
+
+        let currentPart = 1;
+        let examStarted = false;
+        
+        function switchToPart(partNumber) {
+            currentPart = partNumber;
+            document.querySelectorAll('.question-set').forEach(el => el.classList.add('hidden'));
+            document.getElementById('questions-' + partNumber).classList.remove('hidden');
+
+            document.querySelectorAll('.part-header').forEach(el => el.classList.add('hidden'));
+            document.getElementById('part-header-' + partNumber).classList.remove('hidden');
+
+            document.querySelectorAll('.footer__questionWrapper___1tZ46').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.footer__questionWrapper___1tZ46')[partNumber - 1].classList.add('selected');
+        }
+
+        function goToQuestion(qNum) {
+            for (let p of window.testMeta.parts) {
+                if (qNum >= p.start && qNum <= p.end) {
+                    switchToPart(p.part);
+                    break;
+                }
+            }
+            const el = document.getElementById('q' + qNum) || document.querySelector(`[name="q${qNum}"]`);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (el.tagName === 'INPUT' && el.type === 'text') el.focus();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentPart < 4) switchToPart(currentPart + 1);
+        }
+
+        function previousQuestion() {
+            if (currentPart > 1) switchToPart(currentPart - 1);
+        }
+
+        function updateSubQuestionStatus(qNum, isAnswered) {
+            const btn = document.getElementById('sub-btn-' + qNum);
+            if (btn) {
+                if (isAnswered) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+            }
+        }
+
+        function trackAnswer(qNum) {
+            const input = document.getElementById('q' + qNum);
+            if (input) {
+                updateSubQuestionStatus(qNum, input.value.trim().length > 0);
+            }
+        }
+
+        function trackCheckbox(qStart) {
+            const checkboxes = document.querySelectorAll(`[name="q${qStart}_${qStart+1}"]`) || document.querySelectorAll(`[name="q${qStart}"]`);
+            let answered = false;
+            checkboxes.forEach(cb => { if (cb.checked) answered = true; });
+            updateSubQuestionStatus(qStart, answered);
+        }
+
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('answer-input') && e.target.id.startsWith('q')) {
+                const qNum = e.target.id.replace('q', '');
+                updateSubQuestionStatus(qNum, e.target.value.trim().length > 0);
+            }
+        });
+
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                const qNum = e.target.name.replace('q', '');
+                updateSubQuestionStatus(qNum, true);
+            } else if (e.target.tagName === 'SELECT') {
+                const qNum = e.target.id.replace('q', '');
+                updateSubQuestionStatus(qNum, e.target.value.trim().length > 0);
+            } else if (e.target.type === 'checkbox') {
+                const name = e.target.name;
+                if (name) {
+                    const qNum = name.replace('q', '').split('_')[0];
+                    trackCheckbox(parseInt(qNum));
+                }
+            }
+        });
+
+        function toggleScriptPanel() {
+            const panel = document.getElementById('scriptPanel');
+            panel.classList.toggle('active');
+        }
+
+        function highlightEvidence(keyword) {
+            const panel = document.getElementById('scriptPanel');
+            panel.classList.add('active');
+
+            document.querySelectorAll('.script-content span').forEach(el => {
+                el.classList.remove('highlight-evidence');
+            });
+
+            const targetEl = document.getElementById('ev-' + keyword);
+            if (targetEl) {
+                targetEl.classList.add('highlight-evidence');
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        document.getElementById('startNormalBtn').addEventListener('click', function() {
+            examStarted = true;
+            document.getElementById('launchScreen').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            startTimer();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F11' && !examStarted) {
+                examStarted = true;
+                document.getElementById('launchScreen').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+                startTimer();
+            }
+        });
+
+        document.getElementById('deliver-button').addEventListener('click', function() {
+            const studentName = document.getElementById('studentName').value.trim();
+            const studentClass = document.getElementById('studentClass').value.trim();
+            
+            if (!studentName || !studentClass) {
+                alert("Vui lòng điền đầy đủ Họ và tên và Lớp trước khi nộp bài!");
+                document.getElementById('studentName').focus();
+                return;
+            }
+
+            let score = 0;
+            const answers = window.testMeta.correctAnswers;
+            const detailsContainer = document.getElementById('results-details');
+            detailsContainer.innerHTML = '';
+
+            document.getElementById('scriptToggleBtn').classList.remove('hidden');
+
+            for (let i = 1; i <= 40; i++) {
+                let userAns = "";
+                const input = document.getElementById('q' + i);
+                if (input) {
+                    userAns = input.value.trim();
+                } else {
+                    const radios = document.querySelectorAll(`[name="q${i}"]`);
+                    radios.forEach(r => { if (r.checked) userAns = r.value; });
+                    
+                    let checkboxGroup = document.querySelectorAll(`[name="q${i}_${i+1}"]`);
+                    if (checkboxGroup.length === 0) checkboxGroup = document.querySelectorAll(`[name="q${i-1}_${i}"]`);
+                    if (checkboxGroup.length === 0) checkboxGroup = document.querySelectorAll(`[name="q${i}"]`);
+
+                    if (checkboxGroup.length > 0 && checkboxGroup[0].type === 'checkbox') {
+                        let checkedVals = [];
+                        checkboxGroup.forEach(cb => { if (cb.checked) checkedVals.push(cb.value); });
+                        
+                        let groupName = checkboxGroup[0].name;
+                        if (groupName.includes('_')) {
+                            let parts = groupName.replace('q', '').split('_');
+                            let indexInGroup = parts.indexOf(i.toString());
+                            userAns = checkedVals[indexInGroup] || "";
+                        } else {
+                            userAns = checkedVals;
+                        }
+                    }
+                }
+
+                let correct = answers[i];
+                let isCorrect = false;
+
+                if (Array.isArray(correct)) {
+                    if (Array.isArray(userAns)) {
+                        isCorrect = correct.slice().sort().join() === userAns.slice().sort().join();
+                    } else if (typeof userAns === 'string') {
+                        isCorrect = correct.some(ans => ans.toString().toLowerCase() === userAns.toLowerCase());
+                    }
+                } else {
+                    if (typeof userAns === 'string' && typeof correct === 'string') {
+                        isCorrect = userAns.toLowerCase() === correct.toLowerCase();
+                    }
+                }
+
+                if (isCorrect) score++;
+
+                const tag = document.getElementById('ans-tag-' + i);
+                if (tag) {
+                    let correctDisplay = Array.isArray(correct) ? correct.join(', ') : correct;
+                    tag.innerHTML = `<span class="correct-tag">→ ${correctDisplay}</span>`;
+                }
+
+                const expBox = document.getElementById('exp-' + i);
+                if (expBox && window.testExplanations[i]) {
+                    expBox.style.display = 'block';
+                    expBox.innerHTML = `${window.testExplanations[i]}`;
+                }
+
+                const subBtn = document.getElementById('sub-btn-' + i);
+                if (subBtn) {
+                    subBtn.classList.remove('correct', 'incorrect', 'answered');
+                    subBtn.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+
+                const row = document.createElement('div');
+                row.className = `result-row ${isCorrect ? '' : 'incorrect'}`;
+                row.innerHTML = `<span class="q-num">${i}</span><span class="user-ans">${Array.isArray(userAns)?userAns.join(', '):userAns}</span><span class="correct-ans">${Array.isArray(correct)?correct.join(', '):correct}</span>`;
+                detailsContainer.appendChild(row);
+            }
+
+            document.getElementById('results-score').innerText = score;
+            let band = "0";
+            if (score >= 39) band = "9.0";
+            else if (score >= 37) band = "8.5";
+            else if (score >= 35) band = "8.0";
+            else if (score >= 32) band = "7.5";
+            else if (score >= 30) band = "7.0";
+            else if (score >= 27) band = "6.5";
+            else if (score >= 23) band = "6.0";
+            else if (score >= 19) band = "5.5";
+            else if (score >= 15) band = "5.0";
+            else if (score >= 13) band = "4.5";
+            else if (score >= 11) band = "4.0";
+            else if (score >= 9) band = "3.5";
+            else band = "3.0 hoặc thấp hơn";
+
+            document.getElementById('results-band').innerText = band;
+            document.getElementById('results-modal').classList.remove('hidden');
+            
+            isTimerPaused = true;
+            if (timerInterval) clearInterval(timerInterval);
+
+            const statusDiv = document.getElementById('submit-status');
+            statusDiv.style.display = 'block';
+            statusDiv.style.backgroundColor = '#fff3cd';
+            statusDiv.style.color = '#856404';
+            statusDiv.textContent = '⏳ Đang gửi kết quả về hệ thống...';
+
+            const testName = document.getElementById('launchTestTitle').textContent.trim() || document.title;
+            const timeTakenSeconds = (40 * 60) - totalSeconds;
+            const timeTakenStr = Math.floor(timeTakenSeconds / 60) + " phút " + (timeTakenSeconds % 60) + " giây";
+            
+            const now = new Date();
+            const currentTime = now.toLocaleTimeString('vi-VN', { hour12: false }) + ' ' + now.toLocaleDateString('vi-VN');
+
+            const payload = {
+                "Time": currentTime,
+                "time": currentTime,
+                "submitDate": currentTime,
+                "Name": studentName,
+                "studentName": studentName,
+                "Class": studentClass,
+                "studentClass": studentClass,
+                "Correct answer": score + "/40",
+                "score": score + "/40",
+                "total time": timeTakenStr,
+                "timeTaken": timeTakenStr,
+                "Test name": testName,
+                "testName": testName,
+                "examTitle": testName,
+                "bandScore": band,
+                "band": band
+            };
+
+            if (WEBHOOK_URL && WEBHOOK_URL.includes('script.google.com')) {
+                const formBody = new URLSearchParams(payload).toString();
+
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formBody
+                }).then(() => {
+                    statusDiv.style.backgroundColor = '#d4edda';
+                    statusDiv.style.color = '#155724';
+                    statusDiv.textContent = '✅ Kết quả đã được ghi nhận và gửi thành công!';
+                }).catch(err => {
+                    console.error("Lỗi gửi dữ liệu webhook: ", err);
+                    statusDiv.style.backgroundColor = '#f8d7da';
+                    statusDiv.style.color = '#721c24';
+                    statusDiv.textContent = '⚠️ Có lỗi xảy ra khi gửi. Vui lòng kiểm tra lại kết nối.';
+                });
+            }
+        });
+
+        function closeResultsModal() {
+            document.getElementById('results-modal').classList.add('hidden');
+        }
+
+        document.addEventListener('mouseup', function(e) {
+            const selection = window.getSelection();
+            if (!selection.isCollapsed && selection.toString().trim().length > 0) {
+                const range = selection.getRangeAt(0);
+                const span = document.createElement('span');
+                span.className = 'annotation-highlight';
+                span.appendChild(range.extractContents());
+                range.insertNode(span);
+                selection.removeAllRanges();
+            }
+        });
+
+        const audioPlayer = document.getElementById('audio-player');
+        const playPauseBtn = document.getElementById('audio-play-pause');
+        const progressBar = document.getElementById('audio-progress');
+        const currentTimer = document.getElementById('audio-current');
+        const durationTimer = document.getElementById('audio-duration');
+        const speedBtn = document.getElementById('audio-speed-btn');
+        const speedOptions = document.getElementById('audio-speed-options');
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play().catch(error => {
+                    alert("Trình duyệt chặn phát file audio trực tiếp. Hãy kiểm tra tệp audio đã đặt cùng thư mục với file HTML này chưa.");
+                });
+                playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+            } else {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>';
+            }
+        });
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            if (!isNaN(audioPlayer.duration)) {
+                const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.value = progressPercent;
+                currentTimer.textContent = formatTime(audioPlayer.currentTime);
+                durationTimer.textContent = formatTime(audioPlayer.duration);
+            }
+        });
+
+        progressBar.addEventListener('input', () => {
+            if (!isNaN(audioPlayer.duration)) {
+                const seekTime = (progressBar.value / 100) * audioPlayer.duration;
+                audioPlayer.currentTime = seekTime;
+            }
+        });
+
+        speedBtn.addEventListener('click', () => {
+            speedOptions.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.audio-speed-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const speed = parseFloat(option.getAttribute('data-speed'));
+                audioPlayer.playbackRate = speed;
+                speedBtn.textContent = speed + 'x';
+                speedOptions.classList.add('hidden');
+            });
+        });
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            durationTimer.textContent = formatTime(audioPlayer.duration);
+        });
+
+        let totalSeconds = 40 * 60;
+        let isTimerPaused = false;
+        let timerInterval;
+        const timerDisplay = document.querySelector('.timer-display');
+        
+        function updateTimer() {
+            if (!isTimerPaused && totalSeconds > 0) {
+                totalSeconds--;
+                const mins = Math.floor(totalSeconds / 60);
+                const secs = totalSeconds % 60;
+                timerDisplay.textContent = `${mins} minutes ${secs < 10 ? '0' : ''}${secs} remaining`;
+            }
+        }
+        
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        document.getElementById('timer-toggle-btn').addEventListener('click', () => {
+            isTimerPaused = !isTimerPaused;
+        });
+
+        document.getElementById('timer-reset-btn').addEventListener('click', () => {
+            totalSeconds = 40 * 60;
+            isTimerPaused = false;
+        });
+    </script>
+</body>
+</html>
